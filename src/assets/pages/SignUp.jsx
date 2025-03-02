@@ -91,6 +91,7 @@ const SignUp = () => {
             background: "rgb(240, 139, 156)",
           },
         });
+        setIsLoading(false)
         console.log(err);
         return false;
 
