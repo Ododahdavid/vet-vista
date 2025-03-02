@@ -1,0 +1,82 @@
+.general-Navbar{
+    width: 100%;
+    height: 60px;
+    background-color: #F8F7F2;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding-left: 40px;
+}
+.RouteLink{
+    width: fit-content;
+    height: 100%;
+}
+.general-Navbar h2{
+    color: #0C4651;
+    font-size: 30px;
+    font-weight: bolder;
+
+}
+.signUp-section, .LoginSection{
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.signUp-form, .login-form{
+    width: 350px;
+    height: fit-content;
+    border: 1px solid #FFFFFF;
+    border-radius: 12px;
+    padding: 30px 20px;
+    /* background-color: red; */
+}
+.signUp-form h2, .login-form h2{
+    color: #124C5F;
+    font-size: 24px;
+    
+}
+.signUp-form input, .login-form input{
+    width: 100%;
+    height: 35px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: none;
+    outline: 1px solid #EAEAEA;
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+}
+.signUp-form input:focus, .login-form input:focus{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.signUpButton, .loginButton{
+    width: 100%;
+    height: fit-content;
+    padding: 10px 5px;
+    background-color: #124C5F;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    transition: 0.25s;
+}
+.signUpButton:hover, .loginButton:hover{
+    background-color: white;
+    color: #124C5F;
+    outline: 2px solid #124C5F;
+    transition: background-color 0.25s;
+}
+
+.signUpButton:hover .bar,
+.loginButton:hover .bar {
+  background-color: #124C5F !important;
+}

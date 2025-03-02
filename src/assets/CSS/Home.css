@@ -1,0 +1,314 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* outline: 1px red dashed; */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+    list-style: none;
+    text-decoration: none;
+}
+body{
+    /* width: 100%; */
+    /* display: block; */
+    background-color: white;
+    font-family: "Roboto", serif;
+}
+.homePage{
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+}
+.homeNavBar{
+    width: 100%;
+    height: 60px;
+    background-color: white;
+    display: flex;
+    padding: 10px 80px;
+    justify-content: center;
+    align-items: center;
+}
+.LogoContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    gap: 10px;
+    font-size: 24px;
+    color: #0C4651;
+}
+.LogoContainer h2{
+    font-weight: 900;
+}
+.logo{
+    width: 30px;
+    height: 100%;
+}
+
+.homeNavBar ul{
+    display: flex;
+    gap: 15px;
+
+}
+.homeNavBar ul li{
+    width: fit-content;
+    padding: 5px 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.navCotentContainer{
+    display: flex;
+    /* gap: 320px; */
+    width: 85%;
+    justify-content: space-between;
+}
+.Nav-Sign-In{
+    background-color: #124C5F;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s;
+    height: 100%;
+}
+.Nav-Sign-In:hover{
+    background-color: white;
+    color: #124C5F;
+    outline: solid 2px #124C5F;
+    transition: background-color 0.25s;
+}
+.Nav-Sign-Register{
+    background-color: #C7E7E1;
+    color: #124C5F;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s;
+    height: 100%;
+}
+.Nav-Sign-Register:hover{
+    background-color: white;
+    color: #124C5F;
+    outline: solid 2px #124C5F;
+    transition: background-color 0.25s;
+}
+.Header-section{
+    width: 100%;
+    height: 80vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+}
+
+.Header-blob{
+    position: absolute;
+    left: -40px;
+    top: 20px;
+    transform: scale(1.1);
+    z-index: 0;
+}
+.Header-right-side{
+    width: 50%;
+    height: 100%;
+    background-image: url(../../images/upscaleHeaderPhoto.png);
+    background-size: contain; 
+    background-position: center;  
+    background-repeat: no-repeat;
+    z-index: 4;
+    /* background-color: red; */
+}
+.Header-left-side{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 4;
+}
+
+.headerInformationContainer{
+    width: 500px;
+    height: fit-content;
+}
+.headerInformationContainer h1{
+    font-size: 50px;
+    font-weight: 900;
+    line-height: 1.1;
+    color: #000000
+}
+.headerInformationContainer p{
+    font-size: 20px;
+    line-height: 1.5;
+    color: #000000;
+}
+.header-getStarted-button{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: #124C5F;
+    color: #fff;
+    outline: none;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+.header-getStarted-button:hover{
+    background-color: white;
+    color: #124C5F;
+    outline: solid 2px #124C5F;
+    transition: background-color 0.25s;
+    font-weight: bolder;
+}
+.services-section{
+    padding: 20px;
+    width: 100%;
+    height: 40vh;
+}
+.servicesHeader{
+    width: 100%;
+    height: fit-content;
+    position: relative;
+
+}
+.servicesHeader h2{
+    font-size: 30px;
+    padding-left: 40px;
+}
+.Services-underline{
+    position: absolute;
+    left: 40px;
+    top: 90%;
+    width: 10%;
+    height: 5px;
+    background-color: #40A83A;
+    border-radius: 8px;
+}
+.Services-list-container{
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    height: 70%;
+    justify-content: center;
+    align-items: center;
+}
+.services-card{
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+    outline: 1px solid #5FDD6E;
+}
+
+.services-card:nth-child(even) {
+    background: linear-gradient(to bottom, #cdecc3, #FFFFFF);
+}
+
+
+.learnMore-Section{
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    gap: 15px;
+}
+.learnMore-leftSection{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    position: relative;
+}
+.DogPicture{
+    width: 80%;
+    height: 100%;
+}
+.videoImage{
+    position: absolute;
+    width: 120px;
+    height: 100px;
+    top: 10px;
+    right: 70px;
+}
+.learnMore-rightSection{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+.learnMore-rightSection h2{
+    font-weight: bold;
+    width: 500px;
+    font-size: 28px;
+    height: fit-content;
+}
+
+.learnMore-rightSection p{
+    font-size: 18px;
+    /* line-height: 1.5; */
+    color: #5F5F5F;
+    width: 500px;
+    height: fit-content;
+}
+
+/* =======about us ================== */
+.about-us-section{
+    width: 100%;
+    height: 70vh;
+    /* outline: solid 1px blue; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    background-color: #F6FFFD;
+}
+.about-us-left{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}
+.about-us-left h2{
+    width: 500px;
+    font-size: 60px;
+    font-weight: bolder;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+}
+.about-us-left p{
+    width: 500px;
+    font-size: 18px;
+}
+
+.about-us-right{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+/* ===============footer================== */
+.home-footer{
+    width: 100%;
+    height: 60vh;
+    background-color: #F6FAF9;
+}
