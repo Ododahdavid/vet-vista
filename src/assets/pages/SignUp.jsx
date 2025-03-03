@@ -69,6 +69,10 @@ const SignUp = () => {
               background: "rgb(144, 234, 96)",
             },
           });
+
+          setTimeout(() => {
+            navigate("/login")
+          }, 2000);
         }
 
         const userDetails = await response.json()
@@ -80,9 +84,7 @@ const SignUp = () => {
           password: "",
         })
 
-        setTimeout(() => {
-          navigate("/login")
-        }, 2000);
+
 
       }
       catch (err) {

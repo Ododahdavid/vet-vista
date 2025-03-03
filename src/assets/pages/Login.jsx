@@ -70,7 +70,7 @@ const Login = () => {
                   }
 
                   const userDetails = await response.json()
-                  localStorage.setItem("userDetails", JSON.stringify(userDetails))
+                  localStorage.setItem("loginDetails", JSON.stringify(userDetails))
                   localStorage.setItem("token", userDetails.access_token)
                   setloginData({
                     email: "",

@@ -4,31 +4,61 @@ import toast, { Toaster } from "react-hot-toast";
 
 
 export const DashboardPage = () => {
-  return (
-    <div>DASHBOARD PAGE</div>
-  )
-}
 
-// =====================================================================
+    const [username, setUsername] = useState("")
 
-export const MypetPage = () =>{
+    useEffect(() => {
+        const storedData = localStorage.getItem("loginDetails");
+
+        if (storedData) {
+            const parsedData = JSON.parse(storedData); // Parse the JSON string
+            if (parsedData.name) {
+                setUsername(parsedData.name); // Set the username from the object
+            }
+        }
+    }, [])
+
     return (
-      <div>MY PET PAGE</div>
+        <>
+            <section className={"dashboard-page-section"}>
+                <div className={"dashboard-page-header"}>
+
+                    <h3>Dashboard</h3>
+                    <br />
+                    <h1>Welcome,  {username}</h1>
+
+                </div>
+            </section>
+        </>
     )
 }
 
 // =====================================================================
 
-export const DiagnosisPage = () =>{
+export const MypetPage = () => {
     return (
-      <div>DIAGNOSIS PAGE</div>
+        <>
+            <section className={"my-pet-page-section"}>
+
+                
+
+            </section>
+        </>
     )
 }
 
 // =====================================================================
 
-export const NearbyVetsPage = () =>{
+export const DiagnosisPage = () => {
     return (
-      <div>NEARBY VETS PAGE</div>
+        <div>DIAGNOSIS PAGE</div>
+    )
+}
+
+// =====================================================================
+
+export const NearbyVetsPage = () => {
+    return (
+        <div>NEARBY VETS PAGE</div>
     )
 }
