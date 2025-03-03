@@ -77,20 +77,20 @@
 
 /* ==== dashboard page styling=========== 
 */
-.dashboard-page-section{
+.dashboard-page-section, .my-pet-page-section{
     width: 100%;
     height: 100%;
     padding: 30px;
 }
-.dashboard-page-header{
+.dashboard-page-header, .my-pet-header{
     width: 100%;
     height: fit-content;
 }
-.dashboard-page-header h3{
+.dashboard-page-header h3, .my-pet-header h3{
     font-size: 20px;
     color: #0C4651;
 }
-.dashboard-page-header h1{
+.dashboard-page-header h1, .my-pet-header h1{
     font-size: 40px;
     color: #0C4651;
 }

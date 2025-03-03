@@ -42,6 +42,10 @@ export const MypetPage = () => {
 
                 <div className={"my-pet-header"}>
 
+                    <h3>My Pets</h3>
+                    <br />
+                    <h1>Your personal vet inventory</h1>
+
                 </div>
 
             </section>
