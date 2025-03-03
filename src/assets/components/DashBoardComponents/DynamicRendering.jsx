@@ -40,7 +40,9 @@ export const MypetPage = () => {
         <>
             <section className={"my-pet-page-section"}>
 
-                
+                <div className={"my-pet-header"}>
+
+                </div>
 
             </section>
         </>
