@@ -89,7 +89,6 @@ const Login = () => {
                         background: "rgb(240, 139, 156)",
                     },
                 });
-                console.log(err);
                 setIsLoading(false)
                 return false;
             }
