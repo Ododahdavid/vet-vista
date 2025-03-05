@@ -38,9 +38,9 @@ export const DashboardPage = () => {
 
 export const MypetPage = () => {
     const [newPetDetails, setNewPetDetails] = useState({
-        name: "",
+        animal_name: "",
         age: "",
-        specie: "",
+        species: "",
         breed: ""
     });
 
@@ -54,9 +54,9 @@ export const MypetPage = () => {
 
     const handleFormValidation = () => {
         if (
-            newPetDetails.name.trim() === "" ||
+            newPetDetails.animal_name.trim() === "" ||
             newPetDetails.age.trim() === "" ||
-            newPetDetails.specie.trim() === "" ||
+            newPetDetails.species.trim() === "" ||
             newPetDetails.breed.trim() === ""
         ) {
             toast.error("Please fill all the fields", {
@@ -94,7 +94,7 @@ export const MypetPage = () => {
                     },
                 });
                 setNewPetDetails({
-                    name: "",
+                    animal_name: "",
                     age: "",
                     species: "",
                     breed: ""
@@ -140,9 +140,9 @@ export const MypetPage = () => {
                     </div>
 
                     <form onSubmit={uploadPetSubmission} className={"add-new-pet-form"}>
-                        <input type="text" name="name" value={newPetDetails.name} placeholder="Name" onChange={handleInputChange} />
+                        <input type="text" name="animal_name" value={newPetDetails.animal_name} placeholder="Name" onChange={handleInputChange} />
                         <input type="number" name="age" value={newPetDetails.age} placeholder="Age" onChange={handleInputChange} />
-                        <input type="text" name="specie" value={newPetDetails.specie} placeholder="Specie" onChange={handleInputChange} />
+                        <input type="text" name="species" value={newPetDetails.species} placeholder="Specie" onChange={handleInputChange} />
                         <input type="text" name="breed" value={newPetDetails.breed} placeholder="Breed" onChange={handleInputChange} />
 
                         <button type="submit">
