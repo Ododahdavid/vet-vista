@@ -44,6 +44,24 @@ export const MypetPage = () => {
         breed: ""
     });
 
+    const [userId, setUserId] = useState("")
+    
+    // state to store retrieved pets
+    const [pets, setPets] = useState([]) //store fetched pets
+
+    // function to get the users  id from the local storage on mount
+
+    useEffect(()=>{
+        const storedData = localStorage.getItem("loginDetails");
+
+        if (storedData) {
+            const parsedData = JSON.parse(storedData); // Parse the JSON string
+            if (parsedData.id) {
+                setUserId(parsedData.id); // Set the username from the object
+            }
+        }
+    }, [])
+
     const [isLoading, setIsLoading] = useState(false);
 
     const handleInputChange = (event) => {
@@ -68,23 +86,30 @@ export const MypetPage = () => {
         }
         return true;
     };
+    
+    useEffect(() => {
+        if (userId) {
+            fetchUserPets();
+        }
+    }, [userId]);
 
     const uploadPetSubmission = async (event) => {
         event.preventDefault();
-
+        
         if (!handleFormValidation()) {
             setIsLoading(false); // Ensure loader stops if validation fails
             return;
         }
-
+        
         try {
+            const payload = { ...newPetDetails, user_id: Number(userId) };
             setIsLoading(true);
-            const response = await fetch('https://vet-vista.onrender.com/addpet/addpet', {
+            const response = await fetch('https://vet-vista.onrender.com/mypets/addpet', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(newPetDetails),
+                body: JSON.stringify(payload),
             });
 
             if (response.ok) {
@@ -99,6 +124,7 @@ export const MypetPage = () => {
                     species: "",
                     breed: ""
                 });
+                fetchUserPets();
             } else {
                 toast.error("Failed to add pet. Please try again.", {
                     style: {
@@ -117,6 +143,26 @@ export const MypetPage = () => {
             setIsLoading(false); // Ensure loader stops in case of error
         }
     };
+
+    // function to fetch all the users pets on mount
+
+    const fetchUserPets = async () => {
+        try {
+            const response = await fetch(`https://vet-vista.onrender.com/mypets/allpets/${Number(userId)}`);
+            if (response.ok) {
+                const data = await response.json();
+                setPets(data); // Store fetched pets in state
+            } else {
+                toast.error("Failed to fetch pets");
+            }
+        } catch (error) {
+            toast.error("Error fetching pets");
+            console.error(error);
+        }
+    };
+
+    // function to fetch the users pets on mount
+
 
     return (
         <>
@@ -151,6 +197,26 @@ export const MypetPage = () => {
                     </form>
                 </section>
 
+                <br />
+
+                <section className="my-pets-list-container">
+                <h2>Your Pets</h2>
+                {pets.length === 0 ? (
+                    <p>No pets added yet.</p>
+                ) : (
+                    <ul>
+                        {pets.map((pet) => (
+                            <li key={pet._id} className="pet-card">
+                                <h3>{pet.animal_name}</h3>
+                                <p>Age: {pet.age}</p>
+                                <p>Species: {pet.species}</p>
+                                <p>Breed: {pet.breed}</p>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </section>
+
                 <Toaster position="top-center" reverseOrder={false} />
             </section>
         </>
@@ -162,7 +228,9 @@ export const MypetPage = () => {
 
 export const DiagnosisPage = () => {
     return (
-        <div>DIAGNOSIS PAGE</div>
+        <>
+            
+        </>
     )
 }
 
