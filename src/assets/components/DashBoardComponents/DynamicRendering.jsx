@@ -452,11 +452,11 @@ export const DiagnosisPage = () => {
             console.log(data);
             return data;
           } else {
-            toast.error("Failed to submit diagnosis");
+            toast.error("Oops! Something went wrong");
           }
         } catch (err) {
           toast.error("An error occurred while submitting diagnosis");
-          console.error(err);
+          console.error("error message:", err);
         } finally {
           setIsLoading(false);
         }
