@@ -448,6 +448,7 @@ export const DiagnosisPage = () => {
       
           if (response.ok) {
             const data = await response.json();
+            console.log(petDetails)
             toast.success("Diagnosis submitted successfully!");
             console.log(data);
             return data;
