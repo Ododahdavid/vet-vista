@@ -4,7 +4,7 @@
     box-sizing: border-box;
     /* outline: 1px red dashed; */
     @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-    list-style: none;
+    /* list-style: none; */
     text-decoration: none;
 }
 body{

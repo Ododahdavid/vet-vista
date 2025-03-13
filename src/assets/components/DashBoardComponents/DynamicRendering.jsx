@@ -45,13 +45,13 @@ export const MypetPage = () => {
     });
 
     const [userId, setUserId] = useState("")
-    
+
     // state to store retrieved pets
     const [pets, setPets] = useState([]) //store fetched pets
 
     // function to get the users  id from the local storage on mount
 
-    useEffect(()=>{
+    useEffect(() => {
         const storedData = localStorage.getItem("loginDetails");
 
         if (storedData) {
@@ -86,7 +86,7 @@ export const MypetPage = () => {
         }
         return true;
     };
-    
+
     useEffect(() => {
         if (userId) {
             fetchUserPets();
@@ -95,12 +95,12 @@ export const MypetPage = () => {
 
     const uploadPetSubmission = async (event) => {
         event.preventDefault();
-        
+
         if (!handleFormValidation()) {
             setIsLoading(false); // Ensure loader stops if validation fails
             return;
         }
-        
+
         try {
             const payload = { ...newPetDetails, user_id: Number(userId) };
             setIsLoading(true);
@@ -200,23 +200,22 @@ export const MypetPage = () => {
                 <br />
 
                 <section className="my-pets-list-container">
-                <h2>Your Pets</h2>
-                {pets.length === 0 ? (
-                    <p>No pets added yet.</p>
-                ) : (
-                    <ul>
-                        {pets.map((pet) => (
-                            <li key={pet._id} className="pet-card">
-                                <h3>{pet.animal_name}</h3>
-                                <p>Age: {pet.age}</p>
-                                <p>Species: {pet.species}</p>
-                                <p>Breed: {pet.breed}</p>
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </section>
-
+          <h2>Your Pets</h2>
+          {pets.length === 0 ? (
+            <p>No pets added yet.</p>
+          ) : (
+            <ul className="pet-card-list">
+              {pets.map((pet) => (
+                <li key={pet._id} className="pet-card">
+                  <h3 className="pet-name">{pet.animal_name}</h3>
+                  <p className="pet-age">Age: {pet.age}</p>
+                  <p className="pet-species">Species: {pet.species}</p>
+                  <p className="pet-breed">Breed: {pet.breed}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
                 <Toaster position="top-center" reverseOrder={false} />
             </section>
         </>
@@ -226,13 +225,428 @@ export const MypetPage = () => {
 
 // =====================================================================
 
+
+
+
+// import "./DiagnosisPage.css"; // Make sure your CSS is imported if needed
 export const DiagnosisPage = () => {
+    const [petDetails, setPetDetails] = useState({
+      species: "",
+      breed: "",
+      gender: "",
+      symptoms: [],
+      follow_up: {
+        Appetite_Loss: false,
+        Vomiting: false,
+        Diarrhea: false,
+        Coughing: false,
+        Labored_Breathing: false,
+        Lameness: false,
+        Skin_Lesions: false,
+        Nasal_Discharge: false,
+        Eye_Discharge: false,
+      },
+    });
+  
+    const [isLoading, setIsLoading] = useState(false);
+  
+    // Predefined array of follow-up questions
+    const followUpQuestions = [
+      {
+        key: "Appetite_Loss",
+        label: "Has your pet lost appetite recently?",
+        explanation:
+          "Appetite loss can be a sign of various conditions including gastrointestinal or metabolic issues.",
+      },
+      {
+        key: "Vomiting",
+        label: "Has your pet been vomiting?",
+        explanation:
+          "Vomiting can indicate digestive tract problems, infections, or other health concerns.",
+      },
+      {
+        key: "Diarrhea",
+        label: "Is your pet experiencing diarrhea?",
+        explanation:
+          "Diarrhea can lead to dehydration and may signal intestinal inflammation or infection.",
+      },
+      {
+        key: "Coughing",
+        label: "Has your pet been coughing?",
+        explanation:
+          "Coughing might suggest respiratory infections, heart problems, or other underlying issues.",
+      },
+      {
+        key: "Labored_Breathing",
+        label: "Is your pet breathing heavily or laboring to breathe?",
+        explanation:
+          "Labored breathing can be a symptom of respiratory distress, heart disease, or other serious conditions.",
+      },
+      {
+        key: "Lameness",
+        label: "Does your pet show signs of lameness or difficulty walking?",
+        explanation:
+          "Lameness may be caused by injuries, arthritis, or neurological problems.",
+      },
+      {
+        key: "Skin_Lesions",
+        label: "Does your pet have any noticeable skin lesions?",
+        explanation:
+          "Skin lesions can indicate allergies, infections, or parasitic infestations.",
+      },
+      {
+        key: "Nasal_Discharge",
+        label: "Does your pet have nasal discharge?",
+        explanation:
+          "Nasal discharge may be a sign of upper respiratory infection or other nasal conditions.",
+      },
+      {
+        key: "Eye_Discharge",
+        label: "Is your pet experiencing any eye discharge?",
+        explanation:
+          "Eye discharge could indicate infection, injury, or irritations that need prompt attention.",
+      },
+    ];
+  
+    const HowItWorksContainer = useRef(null);
+    const petDetailsForm = useRef(null);
+  
+    // Step tracking: 1 (pet info), 2 (symptoms), 3 (follow-up Qs)
+    const [step, setStep] = useState(1);
+  
+    // For step 2 (symptoms)
+    const [symptomInputs, setSymptomInputs] = useState(["", ""]);
+  
+    // For step 3 (one question per page)
+    const [currentFollowUpIndex, setCurrentFollowUpIndex] = useState(0);
+    const [tempAnswer, setTempAnswer] = useState(null);
+  
+    // Hide "How It Works" and show Step 1 form
+    const handleRemoveHowItWorks = () => {
+      if (HowItWorksContainer.current) {
+        HowItWorksContainer.current.style.display = "none";
+      }
+      if (petDetailsForm.current) {
+        petDetailsForm.current.style.display = "flex";
+      }
+      setStep(1);
+    };
+  
+    // ----- Step 1: Pet Info -----
+    const handleStep1Next = (e) => {
+      e.preventDefault();
+      if (!petDetails.species || !petDetails.breed || !petDetails.gender) {
+        toast.error("Please fill in species, breed, and gender");
+        return;
+      }
+      setStep(2);
+    };
+  
+    // ----- Step 2: Symptoms -----
+    const handleSymptomChange = (index, value) => {
+      const newSymptoms = [...symptomInputs];
+      newSymptoms[index] = value;
+      setSymptomInputs(newSymptoms);
+    };
+  
+    const handleAddSymptom = () => {
+      if (symptomInputs.length < 4) {
+        setSymptomInputs([...symptomInputs, ""]);
+      }
+    };
+  
+    const handleStep2Next = (e) => {
+      e.preventDefault();
+      // Create a formatted data object that contains only non-empty symptoms
+      const formattedData = {
+        symptoms: symptomInputs.filter((symptom) => symptom.trim() !== ""),
+      };
+  
+      if (formattedData.symptoms.length < 2) {
+        toast.error("Please enter at least 2 symptoms");
+        return;
+      }
+      // Update petDetails with a properly formatted symptoms array
+      setPetDetails((prev) => ({ ...prev, symptoms: formattedData.symptoms }));
+      setStep(3);
+    };
+  
+    // ----- Step 3: Single-Question Flow -----
+    const currentQuestion = followUpQuestions[currentFollowUpIndex] || null;
+  
+    const handlePreviousQuestion = () => {
+      if (currentFollowUpIndex > 0) {
+        if (tempAnswer !== null && currentQuestion) {
+          setPetDetails((prev) => ({
+            ...prev,
+            follow_up: {
+              ...prev.follow_up,
+              [currentQuestion.key]: tempAnswer,
+            },
+          }));
+        }
+        setCurrentFollowUpIndex((prevIndex) => prevIndex - 1);
+        const prevKey = followUpQuestions[currentFollowUpIndex - 1].key;
+        const prevAnswer = petDetails.follow_up[prevKey];
+        setTempAnswer(prevAnswer);
+      }
+    };
+  
+    const handleNextQuestion = () => {
+      if (tempAnswer === null) {
+        toast.error("Please select True or False");
+        return;
+      }
+      if (currentQuestion) {
+        setPetDetails((prev) => ({
+          ...prev,
+          follow_up: {
+            ...prev.follow_up,
+            [currentQuestion.key]: tempAnswer,
+          },
+        }));
+      }
+      setTempAnswer(null);
+      if (currentFollowUpIndex < followUpQuestions.length - 1) {
+        setCurrentFollowUpIndex((prevIndex) => prevIndex + 1);
+      }
+    };
+  
+    const handleGetDiagnosis = async (event) => {
+        event.preventDefault();
+        setIsLoading(true);
+      
+        // Construct the final payload directly
+        const finalPayload = {
+          species: petDetails.species,
+          breed: petDetails.breed,
+          gender: petDetails.gender,
+          symptoms: petDetails.symptoms,
+          follow_up: {
+            ...petDetails.follow_up,
+            // Update the current question's follow_up if needed:
+            ...(currentQuestion && {
+              [currentQuestion.key]:
+                tempAnswer !== null
+                  ? tempAnswer
+                  : petDetails.follow_up[currentQuestion.key],
+            }),
+          },
+        };
+      
+        try {
+          const response = await fetch(
+            "https://vet-vista.onrender.com/diagnosis/model",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(finalPayload),
+            }
+          );
+      
+          if (response.ok) {
+            const data = await response.json();
+            toast.success("Diagnosis submitted successfully!");
+            console.log(data);
+            return data;
+          } else {
+            toast.error("Failed to submit diagnosis");
+          }
+        } catch (err) {
+          toast.error("An error occurred while submitting diagnosis");
+          console.error(err);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+  
     return (
-        <>
-            
-        </>
-    )
-}
+      <>
+        <section className="diagnosis-page-general-section">
+          <h2>Diagnosis</h2>
+          <br />
+  
+          <section className="diagnosis-main-container">
+            {/* "How it works" container */}
+            <div
+              ref={HowItWorksContainer}
+              className="diagnosis-page-howItWorks-container"
+            >
+              <h1>Begin Diagnosis</h1>
+              <br />
+              <h3>How it works</h3>
+              <br />
+              <ol>
+                <li>Enter the species, breed, and gender of your pet.</li>
+                <li>Enter a list of observed symptoms (between 2 and 4).</li>
+                <li>Answer follow-up questions from the system.</li>
+                <li>Submit, and wait for the prognosis report.</li>
+              </ol>
+              <br />
+              <button onClick={handleRemoveHowItWorks}>Begin</button>
+            </div>
+  
+            {/* Multi-step form container */}
+            <section className="diagnosis-page-form-container">
+              {/* Step 1: Pet Info */}
+              {step === 1 && (
+                <form
+                  className="petDetailsForm"
+                  ref={petDetailsForm}
+                  onSubmit={handleStep1Next}
+                  style={{ display: "none" }}
+                >
+                  <h1>Provide Your Pet Details</h1>
+                  <div>
+                    <input
+                      type="text"
+                      name="species"
+                      placeholder="Species"
+                      value={petDetails.species}
+                      onChange={(e) =>
+                        setPetDetails({
+                          ...petDetails,
+                          species: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      name="breed"
+                      placeholder="Breed"
+                      value={petDetails.breed}
+                      onChange={(e) =>
+                        setPetDetails({
+                          ...petDetails,
+                          breed: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      name="gender"
+                      placeholder="Gender"
+                      value={petDetails.gender}
+                      onChange={(e) =>
+                        setPetDetails({
+                          ...petDetails,
+                          gender: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <button type="submit">Next</button>
+                </form>
+              )}
+  
+              {/* Step 2: Symptoms */}
+              {step === 2 && (
+                <form className="petSymptomsForm" onSubmit={handleStep2Next}>
+                  <h3>Enter Observable Symptoms</h3>
+                  {symptomInputs.map((symptom, index) => (
+                    <div key={index}>
+                      {/* Fixed string interpolation with backticks */}
+                      <input
+                        type="text"
+                        value={symptom}
+                        placeholder={`Symptom ${index + 1}`}
+                        onChange={(e) =>
+                          handleSymptomChange(index, e.target.value)
+                        }
+                      />
+                    </div>
+                  ))}
+                  <div
+                    className="add-symptom-button-container"
+                    style={{ textAlign: "right" }}
+                  >
+                    <button
+                      className="addSymptomButton"
+                      type="button"
+                      onClick={handleAddSymptom}
+                      disabled={symptomInputs.length >= 4}
+                    >
+                      Add Symptom
+                    </button>
+                  </div>
+                  <br />
+                  <button className="add-symptoms-next-Button" type="submit">
+                    Next
+                  </button>
+                </form>
+              )}
+  
+              {/* Step 3: One Question Per Page */}
+              {step === 3 && currentQuestion && (
+                <div className={"follow-up-questions-container"}>
+                  <div className="followUpQuestionCard">
+                    <h2>{currentQuestion.label}</h2>
+                    <p className="why-ask-this">
+                      <strong>Why ask this?</strong>{" "}
+                      {currentQuestion.explanation}
+                    </p>
+  
+                    {/* True/False Buttons */}
+                    <div className="answerButtons">
+                      <button
+                        className={tempAnswer === true ? "selected" : ""}
+                        onClick={() => setTempAnswer(true)}
+                      >
+                        True
+                      </button>
+                      <button
+                        className={tempAnswer === false ? "selected" : ""}
+                        onClick={() => setTempAnswer(false)}
+                      >
+                        False
+                      </button>
+                    </div>
+  
+                    {/* Navigation Buttons */}
+                    <div className="navButtons">
+                      {currentFollowUpIndex > 0 && (
+                        <button
+                          className={"follow-up-previous-button"}
+                          onClick={handlePreviousQuestion}
+                        >
+                          Previous
+                        </button>
+                      )}
+                      {currentFollowUpIndex < followUpQuestions.length - 1 ? (
+                        <button
+                          className={"follow-up-next-button"}
+                          onClick={handleNextQuestion}
+                        >
+                          Next
+                        </button>
+                      ) : (
+                        <button
+                          className="getDiagnosisButton"
+                          onClick={handleGetDiagnosis}
+                        >
+                          {isLoading ? <SmallLoader /> : "Get Diagnosis"}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </section>
+          </section>
+        </section>
+        <Toaster position="top-center" />
+      </>
+    );
+  };
+  
+
+
 
 // =====================================================================
 

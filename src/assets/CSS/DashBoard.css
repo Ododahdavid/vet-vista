@@ -154,3 +154,328 @@
     justify-content: center;
     align-items: center;
 }
+/* diagnonsis page styling */
+
+.diagnosis-page-general-section{
+    width: 100%;
+    height: 100%;
+    /* background-color: yellow; */
+    padding: 20px;
+}
+
+.diagnosis-page-general-section h2{
+    font-size: 30px;
+    color: #0C4651;
+    font-weight: bold;
+}
+
+.diagnosis-main-container{
+    width: 100%;
+    height: 90%;
+    background-color: white;
+    border-radius: 24px;
+}
+
+.diagnosis-page-howItWorks-container{
+    width: 100%;
+    height: 100%;
+    /* background-color: red; */
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    flex-direction: column;
+}
+
+.diagnosis-page-howItWorks-container h1{
+    font-size: 35px;
+    color: #0C4651;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.diagnosis-page-howItWorks-container h3{
+    color: #0C4651;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.diagnosis-page-howItWorks-container h3, .diagnosis-page-howItWorks-container li{
+    width: 550px;
+    height: fit-content;
+    text-align: left;
+}
+
+.diagnosis-page-howItWorks-container li{
+    margin-top: 10px;
+}
+.diagnosis-page-howItWorks-container button{
+    width: 580px;
+    background-color: #0C4651;
+    color: white;
+    border-radius: 5px;
+    padding: 10px 0px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    font-size: 20px;
+}
+.diagnosis-page-howItWorks-container button:hover{
+    background-color: white;
+    color: #0C4651;
+    transition: 0.25s;
+    outline: 2px #0C4651 solid;
+}
+.petDetailsForm {
+    width: 100%;
+    height: 80vh;
+    /* outline: dashed 2px red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Uncomment this line */
+    gap: 10px;
+    display: none;
+}
+.petDetailsForm h1, .petSymptomsForm h3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    color: #0C4651;
+    font-weight: bolder;
+    width: 100%;
+}
+.petDetailsForm input, .petSymptomsForm input{
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    outline: 1px solid #EAEAEA;
+
+}
+.petDetailsForm button{
+    width: 300px;
+    height: fit-content;
+    padding: 10px 0px;
+    background-color: #0C4651;
+    color: white;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    font-size: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.petDetailsForm button:hover{
+    background-color: white;
+    color: #0C4651;
+    transition: 0.25s;
+    outline: 2px #0C4651 solid;
+}
+.petSymptomsForm{
+    width: 100%;
+    height: 80vh;
+    /* outline: dashed 2px red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Uncomment this line */
+    gap: 10px;
+}
+.addSymptomButton{
+    width: 120px;
+    height: fit-content;
+    padding: 5px 0px;
+    background-color: #0C4651;
+    color: white;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.add-symptom-button-container{
+    width: 300px;
+    height: fit-content;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.add-symptoms-next-Button{
+    width: 300px;
+    height: fit-content;
+    padding: 10px 0px;
+    background-color: #0C4651;
+    color: white;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    font-size: 20px;
+}
+.add-symptoms-next-Button:hover{
+    background-color: white;
+    color: #0C4651;
+    transition: 0.25s;
+    outline: 2px #0C4651 solid;
+}
+.addSymptomButton:disabled{
+    background-color: grey;
+    cursor: not-allowed;
+}
+
+/* Example: DiagnosisPage.css */
+
+/* Container for each question */
+.followUpQuestionCard {
+    max-width: 600px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 2rem;
+  }
+  
+  /* Question text */
+  .followUpQuestionCard h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Explanation */
+  .why-ask-this {
+    margin-bottom: 1rem;
+    font-style: italic;
+    color: #666;
+  }
+  
+  /* True/False Buttons */
+  .answerButtons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .answerButtons button {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    width: 50%;
+    border: none;
+    outline: none;
+  }
+  
+  .answerButtons button.selected {
+    background-color: #0C4651;
+    color: #fff;
+  }
+  
+  /* Navigation Buttons */
+  .navButtons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+.follow-up-questions-container{
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.follow-up-next-button{
+    width: 100%;
+    height: fit-content;
+    padding: 10px 0px;
+    background-color: #0C4651;
+    color: white;
+    font-size: 20px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.follow-up-previous-button{
+    background-color: #0C4651;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+.getDiagnosisButton{
+    width: 100%;
+    height: fit-content;
+    padding: 10px 0px;
+    background-color: #0C4651;
+    color: white;
+    font-size: 20px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.getDiagnosisButton:hover{
+    background-color: white;
+    color: #0C4651;
+    transition: 0.25s;
+    outline: 2px #0C4651 solid;
+}
+
+/* Container for the entire "My Pets" list section */
+.my-pets-list-container {
+    width: 100%;
+    margin-top: 2rem;
+  }
+  
+  /* Heading inside the container */
+  .my-pets-list-container h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  /* Remove default list styling and enable flex layout */
+  .pet-card-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem; /* spacing between cards */
+    list-style: none; /* remove bullets */
+    padding: 0;       /* remove default ul padding */
+    margin: 0;        /* remove default ul margin */
+  }
+  
+  /* Individual card styling */
+  .pet-card {
+    background-color: #ffffff;
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 200px;        /* Fixed width, adjust as needed */
+    padding: 1rem;       /* Spacing inside the card */
+    transition: box-shadow 0.3s ease;
+    text-align: center;  /* Center the text, optional */
+  }
+  
+  /* Add a hover effect if you like */
+  .pet-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Pet name styling */
+  .pet-card .pet-name {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  /* Pet details styling (Age, Species, Breed) */
+  .pet-card p {
+    margin: 0.3rem 0;
+    font-size: 0.95rem;
+    color: #555;
+  }
+  
