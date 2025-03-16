@@ -174,6 +174,7 @@
     height: 90%;
     background-color: white;
     border-radius: 24px;
+    overflow-y: scroll;
 }
 
 .diagnosis-page-howItWorks-container{
@@ -477,5 +478,71 @@
     margin: 0.3rem 0;
     font-size: 0.95rem;
     color: #555;
+  }
+  
+  /* DiagnosisPage.css */
+/* DiagnosisPage.css */
+/* DiagnosisPage.css */
+
+.diagnosis-results-page {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .results-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap; /* Wrap on smaller screens */
+    margin-top: 2rem;
+  }
+  
+  .results-list {
+    text-align: left;
+    font-size: 1.5rem;
+    flex: 1 1 300px; /* Allows it to shrink or grow */
+  }
+  
+  .results-list h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .results-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .results-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .disease-name {
+    font-weight: bold;
+    color: #0C4651;
+  }
+  
+  .disease-percentage {
+    color: #555;
+  }
+  
+  /* Chart Container */
+  .chart-container {
+    flex: 0 0 500px;  /* Fix the container to 300px width */
+    height: 300px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  /* Ensures the doughnut chart does not exceed the container size */
+  .chart-container canvas {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto !important;
+    height: auto !important;
   }
   
