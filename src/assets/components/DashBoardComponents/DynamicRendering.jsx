@@ -727,134 +727,135 @@ export const DiagnosisPage = () => {
 
 // =====================================================================
 
+
+
 export const NearbyVetsPage = () => {
-    const [userPosition, setUserPosition] = useState(null);
-    const [vetStores, setVetStores] = useState([]);
-    const [locationError, setLocationError] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const mapRef = useRef(null);
+  const [userPosition, setUserPosition] = useState(null);
+  const [vetStores, setVetStores] = useState([]);
+  const [locationError, setLocationError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const mapRef = useRef(null);
 
-    useEffect(() => {
-        const fetchData = async (lat, lon) => {
-            try {
-                // Use full backend URL with correct parameter names
-                const apiUrl = 'https://vet-vista-am5q.onrender.com';
-                const response = await fetch(
-                    `${apiUrl}/nearbyvet?latitude=${lat}&longitude=${lon}`
-                );
+  useEffect(() => {
+    const fetchData = async (lat, lon) => {
+      try {
+        const apiUrl = 'https://vet-vista-am5q.onrender.com';
+        // Corrected fetch call with proper query parameters
+        const response = await fetch(`${apiUrl}/nearbyvet?lat=${lat}&lon=${lon}`);
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                const contentType = response.headers.get("content-type");
-                if (!contentType || !contentType.includes("application/json")) {
-                    throw new TypeError("Received non-JSON response");
-                }
-
-                const data = await response.json();
-                setVetStores(data.results); // Assuming backend returns { results: [...] }
-            } catch (error) {
-                console.error("Error fetching vet stores:", error);
-                setVetStores([]);
-                if (error.message.includes("404")) {
-                    setLocationError("Service temporarily unavailable. Please try again later.");
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                async (position) => {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-                    setUserPosition({ lat, lon });
-                    await fetchData(lat, lon);
-                },
-                (error) => {
-                    console.error("Error getting location:", error);
-                    setLocationError("Please enable location access to use this feature");
-                    setLoading(false);
-                }
-            );
-        } else {
-            setLocationError("Geolocation is not supported by your browser");
-            setLoading(false);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-    }, []);
 
-    useEffect(() => {
-        if (userPosition && window.google) {
-            const { lat, lon } = userPosition;
-            const map = new window.google.maps.Map(mapRef.current, {
-                center: { lat, lng: lon },
-                zoom: 12,
-            });
-
-            // User location marker
-            new window.google.maps.Marker({
-                position: { lat, lng: lon },
-                map,
-                title: "Your Location",
-                icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-            });
-
-            // Vet store markers
-            vetStores.forEach((store) => {
-                new window.google.maps.Marker({
-                    position: { lat: store.latitude, lng: store.longitude },
-                    map,
-                    title: store.name,
-                });
-            });
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new TypeError("Received non-JSON response");
         }
-    }, [userPosition, vetStores]);
 
-    return (
-        <div className="nearby-vets-page" style={{ padding: "2rem" }}>
-            <h3>Nearest Vet Stores</h3>
-            
-            {locationError && (
-                <div style={{ color: "red", marginBottom: "1rem" }}>
-                    {locationError}
-                </div>
-            )}
+        const data = await response.json();
+        setVetStores(data); // Since the backend returns an array directly
+      } catch (error) {
+        console.error("Error fetching vet stores:", error);
+        setVetStores([]);
+        if (error.message.includes("404")) {
+          setLocationError("Service temporarily unavailable. Please try again later.");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
 
-            {loading && <p>Loading location data...</p>}
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          setUserPosition({ lat, lon });
+          await fetchData(lat, lon);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          setLocationError("Please enable location access to use this feature");
+          setLoading(false);
+        }
+      );
+    } else {
+      setLocationError("Geolocation is not supported by your browser");
+      setLoading(false);
+    }
+  }, []);
 
-            {!loading && !locationError && (
-                <>
-                    <div
-                        id="map"
-                        ref={mapRef}
-                        style={{ width: "100%", height: "400px", marginBottom: "2rem" }}
-                    ></div>
-                    
-                    <div className="vet-store-list">
-                        <h4>List of Vet Stores</h4>
-                        {vetStores.length > 0 ? (
-                            <ul style={{ listStyle: "none", padding: 0 }}>
-                                {vetStores.map((store, index) => (
-                                    <li key={index} style={{ marginBottom: "1rem" }}>
-                                        <strong>{store.name}</strong>
-                                        <br />
-                                        {store.address || 'Address not available'}
-                                        {store.distance && (
-                                            <div style={{ color: "#666" }}>
-                                                {store.distance.toFixed(1)} km away
-                                            </div>
-                                        )}
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            !loading && <p>No vet stores found within 10km radius.</p>
-                        )}
-                    </div>
-                </>
-            )}
+  useEffect(() => {
+    if (userPosition && window.google) {
+      const { lat, lon } = userPosition;
+      const map = new window.google.maps.Map(mapRef.current, {
+        center: { lat, lng: lon },
+        zoom: 12,
+      });
+
+      // Add user location marker
+      new window.google.maps.Marker({
+        position: { lat, lng: lon },
+        map,
+        title: "Your Location",
+        icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+      });
+
+      // Add markers for each vet store
+      vetStores.forEach((store) => {
+        new window.google.maps.Marker({
+          position: { lat: store.latitude, lng: store.longitude },
+          map,
+          title: store.name,
+        });
+      });
+    }
+  }, [userPosition, vetStores]);
+
+  return (
+    <div className="nearby-vets-page" style={{ padding: "2rem" }}>
+      <h3>Nearest Vet Stores</h3>
+
+      {locationError && (
+        <div style={{ color: "red", marginBottom: "1rem" }}>
+          {locationError}
         </div>
-    );
+      )}
+
+      {loading && <p>Loading location data...</p>}
+
+      {!loading && !locationError && (
+        <>
+          <div
+            id="map"
+            ref={mapRef}
+            style={{ width: "100%", height: "400px", marginBottom: "2rem" }}
+          ></div>
+
+          <div className="vet-store-list">
+            <h4>List of Vet Stores</h4>
+            {vetStores.length > 0 ? (
+              <ul style={{ listStyle: "none", padding: 0 }}>
+                {vetStores.map((store, index) => (
+                  // Using store.name as key if no unique id is available
+                  <li key={store.id || store.name || index} style={{ marginBottom: "1rem" }}>
+                    <strong>{store.name}</strong>
+                    <br />
+                    {store.address || 'Address not available'}
+                    {store.distance && (
+                      <div style={{ color: "#666" }}>
+                        {store.distance.toFixed(1)} km away
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No vet stores found within 10km radius.</p>
+            )}
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
