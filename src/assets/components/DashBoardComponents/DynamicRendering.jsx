@@ -737,19 +737,29 @@ export const NearbyVetsPage = () => {
     useEffect(() => {
         const fetchData = async (lat, lon) => {
             try {
-                const response = await fetch(`/nearbyvet?lat=${lat}&lon=${lon}`);
+                // Use full backend URL with correct parameter names
+                const apiUrl = 'https://vet-vista-am5q.onrender.com';
+                const response = await fetch(
+                    `${apiUrl}/nearbyvet?latitude=${lat}&longitude=${lon}`
+                );
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
+                
                 const contentType = response.headers.get("content-type");
                 if (!contentType || !contentType.includes("application/json")) {
                     throw new TypeError("Received non-JSON response");
                 }
+
                 const data = await response.json();
-                setVetStores(data);
+                setVetStores(data.results); // Assuming backend returns { results: [...] }
             } catch (error) {
                 console.error("Error fetching vet stores:", error);
                 setVetStores([]);
+                if (error.message.includes("404")) {
+                    setLocationError("Service temporarily unavailable. Please try again later.");
+                }
             } finally {
                 setLoading(false);
             }
@@ -774,35 +784,34 @@ export const NearbyVetsPage = () => {
             setLoading(false);
         }
     }, []);
-  
-    // Initialize the map once we have the user's location (and the Google Maps API is loaded)
+
     useEffect(() => {
-      if (userPosition && window.google) {
-        const { lat, lon } = userPosition;
-        const map = new window.google.maps.Map(mapRef.current, {
-          center: { lat, lng: lon },
-          zoom: 12,
-        });
-  
-        // Add marker for the user's location
-        new window.google.maps.Marker({
-          position: { lat, lng: lon },
-          map,
-          title: "Your Location",
-          icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-        });
-  
-        // Add markers for each vet store
-        vetStores.forEach((store) => {
-          new window.google.maps.Marker({
-            position: { lat: store.latitude, lng: store.longitude },
-            map,
-            title: store.name,
-          });
-        });
-      }
+        if (userPosition && window.google) {
+            const { lat, lon } = userPosition;
+            const map = new window.google.maps.Map(mapRef.current, {
+                center: { lat, lng: lon },
+                zoom: 12,
+            });
+
+            // User location marker
+            new window.google.maps.Marker({
+                position: { lat, lng: lon },
+                map,
+                title: "Your Location",
+                icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+            });
+
+            // Vet store markers
+            vetStores.forEach((store) => {
+                new window.google.maps.Marker({
+                    position: { lat: store.latitude, lng: store.longitude },
+                    map,
+                    title: store.name,
+                });
+            });
+        }
     }, [userPosition, vetStores]);
-  
+
     return (
         <div className="nearby-vets-page" style={{ padding: "2rem" }}>
             <h3>Nearest Vet Stores</h3>
@@ -812,10 +821,9 @@ export const NearbyVetsPage = () => {
                     {locationError}
                 </div>
             )}
-    
-            {loading && <p>Loading...</p>}
-    
-            {/* Map Container */}
+
+            {loading && <p>Loading location data...</p>}
+
             {!loading && !locationError && (
                 <>
                     <div
@@ -824,7 +832,6 @@ export const NearbyVetsPage = () => {
                         style={{ width: "100%", height: "400px", marginBottom: "2rem" }}
                     ></div>
                     
-                    {/* List of Vet Stores */}
                     <div className="vet-store-list">
                         <h4>List of Vet Stores</h4>
                         {vetStores.length > 0 ? (
@@ -833,16 +840,21 @@ export const NearbyVetsPage = () => {
                                     <li key={index} style={{ marginBottom: "1rem" }}>
                                         <strong>{store.name}</strong>
                                         <br />
-                                        {store.address}
+                                        {store.address || 'Address not available'}
+                                        {store.distance && (
+                                            <div style={{ color: "#666" }}>
+                                                {store.distance.toFixed(1)} km away
+                                            </div>
+                                        )}
                                     </li>
                                 ))}
                             </ul>
                         ) : (
-                            !loading && <p>No vet stores found.</p>
+                            !loading && <p>No vet stores found within 10km radius.</p>
                         )}
                     </div>
                 </>
             )}
         </div>
     );
-}
+};
