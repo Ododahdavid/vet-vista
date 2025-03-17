@@ -903,7 +903,7 @@ export const NearbyVetsPage = () => {
   useEffect(() => {
     const fetchData = async (lat, lon) => {
       try {
-        const apiUrl = 'https://vet-vista-am5q.onrender.com';
+        const apiUrl = 'https://vet-vista.onrender.com/vet-stores';
         // Corrected fetch call with proper query parameters
         const response = await fetch(`${apiUrl}/nearbyvet?lat=${lat}&lon=${lon}`);
 
