@@ -546,4 +546,12 @@
     height: auto !important;
   }
   
+.animal-dropdown-select{
+    width: 200px;
+    height: 30px;
+    border: none;
+    outline: #555 solid 1px ;
+    border-radius: 5px;
+}
+
   

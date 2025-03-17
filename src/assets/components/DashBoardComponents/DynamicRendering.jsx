@@ -581,7 +581,7 @@ export const DiagnosisPage = () => {
                                 >
                                     <h1>Provide Your Pet Details</h1>
                                     <div>
-                                        <select
+                                        <select className={"animal-dropdown-select"}
                                             name="species"
                                             value={petDetails.species}
                                             onChange={(e) => {
@@ -606,6 +606,7 @@ export const DiagnosisPage = () => {
                                     </div>
                                     <div>
                                         <select
+                                            className={"animal-dropdown-select"}
                                             name="breed"
                                             value={petDetails.breed}
                                             onChange={(e) =>
@@ -773,6 +774,7 @@ export const DiagnosisPage = () => {
                                     </div>
                                     <div>
                                         <select
+                                            className={"animal-dropdown-select"}
                                             name="gender"
                                             value={petDetails.gender}
                                             onChange={(e) =>
