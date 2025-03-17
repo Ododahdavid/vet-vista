@@ -581,24 +581,32 @@ export const DiagnosisPage = () => {
                                 >
                                     <h1>Provide Your Pet Details</h1>
                                     <div>
-                                        <input
-                                            type="text"
+                                        <select
                                             name="species"
-                                            placeholder="Species"
                                             value={petDetails.species}
-                                            onChange={(e) =>
+                                            onChange={(e) => {
+                                                const species = e.target.value;
                                                 setPetDetails({
                                                     ...petDetails,
-                                                    species: e.target.value,
-                                                })
-                                            }
-                                        />
+                                                    species,
+                                                    breed: "" // reset breed if species changes
+                                                });
+                                            }}
+                                        >
+                                            <option value="" disabled>Select Animal</option>
+                                            <option value="dog">Dog</option>
+                                            <option value="cat">Cat</option>
+                                            <option value="cow">Cow</option>
+                                            <option value="rabbit">Rabbit</option>
+                                            <option value="horse">Horse</option>
+                                            <option value="goat">Goat</option>
+                                            <option value="sheep">Sheep</option>
+                                            <option value="pig">Pig</option>
+                                        </select>
                                     </div>
                                     <div>
-                                        <input
-                                            type="text"
+                                        <select
                                             name="breed"
-                                            placeholder="Breed"
                                             value={petDetails.breed}
                                             onChange={(e) =>
                                                 setPetDetails({
@@ -606,13 +614,166 @@ export const DiagnosisPage = () => {
                                                     breed: e.target.value,
                                                 })
                                             }
-                                        />
+                                        >
+                                            <option value="" disabled>Select Breed</option>
+                                            {petDetails.species === "dog" && (
+                                                <>
+                                                    <option value="Labrador">Labrador</option>
+                                                    <option value="Beagle">Beagle</option>
+                                                    <option value="German shepherd">German shepherd</option>
+                                                    <option value="Bulldog">Bulldog</option>
+                                                    <option value="Poodle">Poodle</option>
+                                                    <option value="Chihuahua">Chihuahua</option>
+                                                    <option value="Siberian Husky">Siberian Husky</option>
+                                                    <option value="Golden Retriever">Golden Retriever</option>
+                                                    <option value="Dachshund">Dachshund</option>
+                                                    <option value="Husky">Husky</option>
+                                                    <option value="Border collie">Border collie</option>
+                                                    <option value="Labrador retriever">Labrador retriever</option>
+                                                    <option value="Rottweiler">Rottweiler</option>
+                                                    <option value="Shih Tzu">Shih Tzu</option>
+                                                    <option value="Dalmatian">Dalmatian</option>
+                                                    <option value="Akita">Akita</option>
+                                                    <option value="Boxer">Boxer</option>
+                                                    <option value="Corgi">Corgi</option>
+                                                    <option value="Doberman pinscher">Doberman pinscher</option>
+                                                    <option value="Pit Bull">Pit Bull</option>
+                                                    <option value="Cocker spaniel">Cocker spaniel</option>
+                                                    <option value="Yorkshire Terrier">Yorkshire Terrier</option>
+                                                </>
+                                            )}
+                                            {petDetails.species === "cat" && (
+                                                <>
+                                                    <option value="Scottish Fold">Scottish Fold</option>
+                                                    <option value="Russian Blue">Russian Blue</option>
+                                                    <option value="Ragdoll">Ragdoll</option>
+                                                    <option value="Sphynx">Sphynx</option>
+                                                    <option value="Abyssinian">Abyssinian</option>
+                                                    <option value="Siberian">Siberian</option>
+                                                    <option value="Siamese">Siamese</option>
+                                                    <option value="Bombay">Bombay</option>
+                                                    <option value="Persian">Persian</option>
+                                                    <option value="Burmese">Burmese</option>
+                                                    <option value="Devon Rex">Devon Rex</option>
+                                                    <option value="Manx">Manx</option>
+                                                    <option value="Maine Coon">Maine Coon</option>
+                                                    <option value="American Curl">American Curl</option>
+                                                    <option value="Bengal">Bengal</option>
+                                                    <option value="British Shorthair">British Shorthair</option>
+                                                </>
+                                            )}
+                                            {petDetails.species === "cow" && (
+                                                <>
+                                                    <option value="Red Angus">Red Angus</option>
+                                                    <option value="Ayrshire">Ayrshire</option>
+                                                    <option value="Hereford">Hereford</option>
+                                                    <option value="Red Poll">Red Poll</option>
+                                                    <option value="Guernsey">Guernsey</option>
+                                                    <option value="Dexter">Dexter</option>
+                                                    <option value="Brown Swiss">Brown Swiss</option>
+                                                    <option value="Limousin">Limousin</option>
+                                                    <option value="Charolais">Charolais</option>
+                                                    <option value="Holstein">Holstein</option>
+                                                    <option value="Shorthorn">Shorthorn</option>
+                                                    <option value="Aberdeen Angus">Aberdeen Angus</option>
+                                                    <option value="Brahman">Brahman</option>
+                                                    <option value="Angus">Angus</option>
+                                                    <option value="Jersey">Jersey</option>
+                                                    <option value="Belted Galloway">Belted Galloway</option>
+                                                    <option value="Simmental">Simmental</option>
+                                                </>
+                                            )}
+                                            {petDetails.species === "rabbit" && (
+                                                <>
+                                                    <option value="English Lop">English Lop</option>
+                                                    <option value="Flemish Giant">Flemish Giant</option>
+                                                    <option value="Mini Rex">Mini Rex</option>
+                                                    <option value="Mini Lop">Mini Lop</option>
+                                                    <option value="Holland Lop">Holland Lop</option>
+                                                    <option value="English Spot">English Spot</option>
+                                                    <option value="Dutch">Dutch</option>
+                                                    <option value="Himalayan">Himalayan</option>
+                                                    <option value="English Angora">English Angora</option>
+                                                </>
+                                            )}
+                                            {petDetails.species === "horse" && (
+                                                <>
+                                                    <option value="Thoroughbred">Thoroughbred</option>
+                                                    <option value="Mustang">Mustang</option>
+                                                    <option value="Appaloosa">Appaloosa</option>
+                                                    <option value="Arabian">Arabian</option>
+                                                    <option value="American Quarter">American Quarter</option>
+                                                    <option value="Morgan">Morgan</option>
+                                                    <option value="Percheron">Percheron</option>
+                                                    <option value="Shire">Shire</option>
+                                                    <option value="Welsh Pony">Welsh Pony</option>
+                                                    <option value="Tennessee Walker">Tennessee Walker</option>
+                                                    <option value="Belgian">Belgian</option>
+                                                    <option value="Paint">Paint</option>
+                                                    <option value="Shetland Pony">Shetland Pony</option>
+                                                    <option value="Tennessee Walking Horse">Tennessee Walking Horse</option>
+                                                    <option value="Andalusian">Andalusian</option>
+                                                    <option value="Pinto">Pinto</option>
+                                                    <option value="Quarter Horse">Quarter Horse</option>
+                                                    <option value="Standardbred">Standardbred</option>
+                                                    <option value="Clydesdale">Clydesdale</option>
+                                                </>
+                                            )}
+                                            {petDetails.species === "goat" && (
+                                                <>
+                                                    <option value="Nigerian Dwarf">Nigerian Dwarf</option>
+                                                    <option value="Kiko">Kiko</option>
+                                                    <option value="Saanen">Saanen</option>
+                                                    <option value="Angora">Angora</option>
+                                                    <option value="Toggenburg">Toggenburg</option>
+                                                    <option value="Alpine">Alpine</option>
+                                                    <option value="Boer">Boer</option>
+                                                    <option value="Nubian">Nubian</option>
+                                                    <option value="LaMancha">LaMancha</option>
+                                                </>
+                                            )}
+                                            {petDetails.species === "sheep" && (
+                                                <>
+                                                    <option value="Blackface">Blackface</option>
+                                                    <option value="Romney">Romney</option>
+                                                    <option value="Karakul">Karakul</option>
+                                                    <option value="Suffolk">Suffolk</option>
+                                                    <option value="Cheviot">Cheviot</option>
+                                                    <option value="Leicester Longwool">Leicester Longwool</option>
+                                                    <option value="Tunis">Tunis</option>
+                                                    <option value="Merino">Merino</option>
+                                                    <option value="Southdown">Southdown</option>
+                                                    <option value="Hampshire">Hampshire</option>
+                                                    <option value="Lincoln">Lincoln</option>
+                                                    <option value="Finnsheep">Finnsheep</option>
+                                                    <option value="Dorset">Dorset</option>
+                                                    <option value="Texel">Texel</option>
+                                                    <option value="Corriedale">Corriedale</option>
+                                                    <option value="Dorper">Dorper</option>
+                                                    <option value="Rambouillet">Rambouillet</option>
+                                                    <option value="Border Leicester">Border Leicester</option>
+                                                </>
+                                            )}
+                                            {petDetails.species === "pig" && (
+                                                <>
+                                                    <option value="Hampshire">Hampshire</option>
+                                                    <option value="Wessex Saddleback">Wessex Saddleback</option>
+                                                    <option value="Yorkshire">Yorkshire</option>
+                                                    <option value="Berkshire">Berkshire</option>
+                                                    <option value="Poland China">Poland China</option>
+                                                    <option value="Pietrain">Pietrain</option>
+                                                    <option value="Duroc">Duroc</option>
+                                                    <option value="Landrace">Landrace</option>
+                                                    <option value="Large White">Large White</option>
+                                                    <option value="Chester White">Chester White</option>
+                                                    <option value="Tamworth">Tamworth</option>
+                                                </>
+                                            )}
+                                        </select>
                                     </div>
                                     <div>
-                                        <input
-                                            type="text"
+                                        <select
                                             name="gender"
-                                            placeholder="Gender"
                                             value={petDetails.gender}
                                             onChange={(e) =>
                                                 setPetDetails({
@@ -620,7 +781,11 @@ export const DiagnosisPage = () => {
                                                     gender: e.target.value,
                                                 })
                                             }
-                                        />
+                                        >
+                                            <option value="" disabled>Select Gender</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </select>
                                     </div>
                                     <button type="submit">Next</button>
                                 </form>
@@ -724,7 +889,6 @@ export const DiagnosisPage = () => {
         </>
     );
 };
-
 // =====================================================================
 
 
