@@ -488,14 +488,16 @@ export const DiagnosisPage = () => {
 
         // Assuming each entry is now [disease, percentage, description, solution]
         const sortedResults = Object.entries(diagnosisResults.prioritized_results)
-            .map(([key, value]) => ({
-                key,
-                disease: value[0],
-                percentage: value[1],
-                description: value[2],
-                solution: value[3],
-            }))
-            .sort((a, b) => b.percentage - a.percentage);
+        .map(([key, value]) => ({
+          key,
+          disease: value[0],
+          percentage: value[1],
+          // Swap description and solution fields:
+          description: value[3],
+          solution: value[2],
+        }))
+        .sort((a, b) => b.percentage - a.percentage);
+      
 
         // Example chart data & options (adjust as needed)
         const chartData = {
@@ -612,8 +614,11 @@ export const DiagnosisPage = () => {
                 key,
                 disease: value[0],
                 percentage: value[1],
-                description: value[2],
-                solution: value[3],
+                // Swap these two so that:
+                // description is now at index 3 (to show in the modal)
+                // solution is at index 2 (to show on the solutions page)
+                solution: value[2],
+                description: value[3],
             }))
             .sort((a, b) => b.percentage - a.percentage);
 
@@ -840,7 +845,7 @@ export const DiagnosisPage = () => {
                                             )}
                                             {petDetails.species === "sheep" && (
                                                 <>
-                                                      <option value="Blackface">Blackface</option>
+                                                    <option value="Blackface">Blackface</option>
                                                     <option value="Romney">Romney</option>
                                                     <option value="Karakul">Karakul</option>
                                                     <option value="Suffolk">Suffolk</option>
@@ -863,7 +868,7 @@ export const DiagnosisPage = () => {
                                             )}
                                             {petDetails.species === "pig" && (
                                                 <>
-                                                     <option value="Hampshire">Hampshire</option>
+                                                    <option value="Hampshire">Hampshire</option>
                                                     <option value="Wessex Saddleback">Wessex Saddleback</option>
                                                     <option value="Yorkshire">Yorkshire</option>
                                                     <option value="Berkshire">Berkshire</option>
@@ -952,13 +957,13 @@ export const DiagnosisPage = () => {
                                                 className={tempAnswer === true ? "selected" : ""}
                                                 onClick={() => setTempAnswer(true)}
                                             >
-                                                True
+                                                Yes
                                             </button>
                                             <button
                                                 className={tempAnswer === false ? "selected" : ""}
                                                 onClick={() => setTempAnswer(false)}
                                             >
-                                                False
+                                                No
                                             </button>
                                         </div>
                                         <div className="navButtons">
