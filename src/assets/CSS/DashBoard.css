@@ -555,3 +555,109 @@
 }
 
   
+
+
+
+
+
+
+
+
+/* Pet Details Summary Box */
+.pet-details-summary {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    text-align: left;
+    background-color: #f9f9f9;
+  }
+  
+  /* Info Icon for Disease Description */
+  .info-icon {
+    margin-left: 0.5rem;
+    color: #0c4651;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+  
+  /* Modal Overlay & Content */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+    text-align: left;
+  }
+  
+  /* Button to View Possible Solutions */
+  .view-solutions-button {
+    margin-top: 2rem;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #0c4651;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .view-solutions-button:hover {
+    background-color: white;
+    color: #0c4651;
+    outline: 2px solid #0c4651;
+    transition: 0.25s;
+  }
+  
+  /* Solutions Page Styling */
+  .solutions-page {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .solutions-page ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .solutions-page li {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: left;
+  }
+  
+  /* Back to Results Button on Solutions Page */
+  .back-to-results-button {
+    margin-top: 2rem;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #0c4651;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .back-to-results-button:hover {
+    background-color: white;
+    color: #0c4651;
+    outline: 2px solid #0c4651;
+    transition: 0.25s;
+  }
+  
