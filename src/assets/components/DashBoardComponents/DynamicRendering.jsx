@@ -488,16 +488,16 @@ export const DiagnosisPage = () => {
 
         // Assuming each entry is now [disease, percentage, description, solution]
         const sortedResults = Object.entries(diagnosisResults.prioritized_results)
-        .map(([key, value]) => ({
-          key,
-          disease: value[0],
-          percentage: value[1],
-          // Swap description and solution fields:
-          description: value[3],
-          solution: value[2],
-        }))
-        .sort((a, b) => b.percentage - a.percentage);
-      
+            .map(([key, value]) => ({
+                key,
+                disease: value[0],
+                percentage: value[1],
+                // Swap description and solution fields:
+                description: value[3],
+                solution: value[2],
+            }))
+            .sort((a, b) => b.percentage - a.percentage);
+
 
         // Example chart data & options (adjust as needed)
         const chartData = {
@@ -1023,133 +1023,141 @@ export const DiagnosisPage = () => {
 
 
 
+
+
+
+
 export const NearbyVetsPage = () => {
-    const [userPosition, setUserPosition] = useState(null);
-    const [vetStores, setVetStores] = useState([]);
-    const [locationError, setLocationError] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const mapRef = useRef(null);
+  const [userPosition, setUserPosition] = useState(null);
+  const [vetStores, setVetStores] = useState([]);
+  const [locationError, setLocationError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const mapRef = useRef(null);
 
-    useEffect(() => {
-        const fetchData = async (lat, lon) => {
-            try {
-                const apiUrl = 'https://vet-vista.onrender.com/vet-stores';
-                // Corrected fetch call with proper query parameters
-                const response = await fetch(`${apiUrl}/nearbyvet?lat=${lat}&lon=${lon}`);
+  // Fetch nearby vet stores from your API
+  const fetchData = async (lat, lon) => {
+    try {
+      const apiUrl = "https://vet-vista.onrender.com/vet-stores";
+      const response = await fetch(`${apiUrl}/nearbyvet?lat=${lat}&lon=${lon}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setVetStores(data);
+    } catch (error) {
+      console.error("Error fetching vet stores:", error);
+      setVetStores([]);
+      setLocationError("Service temporarily unavailable. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+  // Geolocation success and error callbacks
+  const geoSuccess = async (position) => {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    console.log("User location:", { lat, lon });
+    setUserPosition({ lat, lon });
+    await fetchData(lat, lon);
+  };
 
-                const contentType = response.headers.get("content-type");
-                if (!contentType || !contentType.includes("application/json")) {
-                    throw new TypeError("Received non-JSON response");
-                }
+  const geoError = (error) => {
+    console.error("Error getting location:", error);
+    setLocationError("Please enable location access to use this feature.");
+    setLoading(false);
+  };
 
-                const data = await response.json();
-                setVetStores(data); // Since the backend returns an array directly
-            } catch (error) {
-                console.error("Error fetching vet stores:", error);
-                setVetStores([]);
-                if (error.message.includes("404")) {
-                    setLocationError("Service temporarily unavailable. Please try again later.");
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
+  const geoOptions = {
+    enableHighAccuracy: true,
+    timeout: 10000, // 10 seconds
+    maximumAge: 0,
+  };
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                async (position) => {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-                    setUserPosition({ lat, lon });
-                    await fetchData(lat, lon);
-                },
-                (error) => {
-                    console.error("Error getting location:", error);
-                    setLocationError("Please enable location access to use this feature");
-                    setLoading(false);
-                }
-            );
-        } else {
-            setLocationError("Geolocation is not supported by your browser");
-            setLoading(false);
-        }
-    }, []);
+  // Get user's location once when the component mounts
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
+    } else {
+      setLocationError("Geolocation is not supported by your browser");
+      setLoading(false);
+    }
+  }, []);
 
-    useEffect(() => {
-        if (userPosition && window.google) {
-            const { lat, lon } = userPosition;
-            const map = new window.google.maps.Map(mapRef.current, {
-                center: { lat, lng: lon },
-                zoom: 12,
-            });
+  // Initialize the map once we have the user position, vet stores, and the map container is rendered
+  useEffect(() => {
+    if (!userPosition || !window.google || !mapRef.current) return;
 
-            // Add user location marker
-            new window.google.maps.Marker({
-                position: { lat, lng: lon },
-                map,
-                title: "Your Location",
-                icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-            });
+    const { lat, lon } = userPosition;
+    const map = new window.google.maps.Map(mapRef.current, {
+      center: { lat, lng: lon },
+      zoom: 12,
+    });
 
-            // Add markers for each vet store
-            vetStores.forEach((store) => {
-                new window.google.maps.Marker({
-                    position: { lat: store.latitude, lng: store.longitude },
-                    map,
-                    title: store.name,
-                });
-            });
-        }
-    }, [userPosition, vetStores]);
+    // Add a marker for the user location
+    new window.google.maps.Marker({
+      position: { lat, lng: lon },
+      map,
+      title: "Your Location",
+      icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+    });
 
-    return (
-        <div className="nearby-vets-page" style={{ padding: "2rem" }}>
-            <h3>Nearest Vet Stores</h3>
+    // Add markers for each vet store
+    vetStores.forEach((store) => {
+      new window.google.maps.Marker({
+        position: { lat: store.latitude, lng: store.longitude },
+        map,
+        title: store.name,
+      });
+    });
+  }, [userPosition, vetStores]);
 
-            {locationError && (
-                <div style={{ color: "red", marginBottom: "1rem" }}>
-                    {locationError}
-                </div>
-            )}
+  return (
+    <div className="nearby-vets-container">
+      <h2>Nearby Vets</h2>
 
-            {loading && <p>Loading location data...</p>}
+            <br />
+            <br />
 
-            {!loading && !locationError && (
-                <>
-                    <div
-                        id="map"
-                        ref={mapRef}
-                        style={{ width: "100%", height: "400px", marginBottom: "2rem" }}
-                    ></div>
+      {locationError && <p className="error-message">{locationError}</p>}
+      {loading && <p>Loading location data...</p>}
 
-                    <div className="vet-store-list">
-                        <h4>List of Vet Stores</h4>
-                        {vetStores.length > 0 ? (
-                            <ul style={{ listStyle: "none", padding: 0 }}>
-                                {vetStores.map((store, index) => (
-                                    // Using store.name as key if no unique id is available
-                                    <li key={store.id || store.name || index} style={{ marginBottom: "1rem" }}>
-                                        <strong>{store.name}</strong>
-                                        <br />
-                                        {store.address || 'Address not available'}
-                                        {store.distance && (
-                                            <div style={{ color: "#666" }}>
-                                                {store.distance.toFixed(1)} km away
-                                            </div>
-                                        )}
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p>No vet stores found within 10km radius.</p>
-                        )}
-                    </div>
-                </>
-            )}
-        </div>
-    );
+      {!loading && !locationError && (
+        <>
+          <div id="map" ref={mapRef} className="map-container" />
+          <div className="vet-details">
+            <h3>Available Vet Services</h3>
+            <table className="vet-table">
+              <thead>
+                <tr>
+                  <th>Locations</th>
+                  <th>Sessions</th>
+                  <th>Time Frame</th>
+                </tr>
+              </thead>
+              <tbody>
+                {vetStores.length > 0 ? (
+                  vetStores.map((store, index) => (
+                    <tr key={store.id || index}>
+                      <td>{store.name}</td>
+                      <td className={store.status?.toLowerCase() || "open"}>
+                        {store.status || "Open"}
+                      </td>
+                      <td>8am - 11pm</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="3" className="no-data">
+                      No vet stores found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
