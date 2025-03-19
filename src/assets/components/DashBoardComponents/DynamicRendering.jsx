@@ -4,6 +4,7 @@ import SmallLoader from '../loaders/SmallLoader.jsx';
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import BigLoader from '../loaders/BigLoader.jsx';
+import { getPetIcon } from '../general components/PetIcons.jsx';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
@@ -70,79 +71,7 @@ export const DashboardPage = () => {
         comments: 11,
         likes: 6,
         avatarColors: ["#FF69B4", "#8FBC8F", "#CD5C5C"],
-      },
-      {
-        id: 7,
-        title: "Leptospirosis Warning",
-        description: "Standing water hazards prompt new caution advisories.",
-        comments: 3,
-        likes: 9,
-        avatarColors: ["#87CEFA", "#FFB6C1", "#FFFACD"],
-      },
-      {
-        id: 8,
-        title: "Salmonella in Pets",
-        description: "Check your pet food brand for latest recall notices.",
-        comments: 13,
-        likes: 8,
-        avatarColors: ["#FFA07A", "#B0E0E6", "#FFF8DC"],
-      },
-      {
-        id: 9,
-        title: "Ringworm in Cats",
-        description: "Feline owners advised on hygiene and early detection.",
-        comments: 2,
-        likes: 1,
-        avatarColors: ["#D8BFD8", "#FFD700", "#FF4500"],
-      },
-      {
-        id: 10,
-        title: "Kennel Cough Epidemic",
-        description: "Boarding facilities enforcing stricter vaccine rules.",
-        comments: 10,
-        likes: 5,
-        avatarColors: ["#98FB98", "#FF7F50", "#B0C4DE"],
-      },
-      {
-        id: 11,
-        title: "Equine Flu Spread",
-        description: "Horses in stables require immediate medical checks.",
-        comments: 7,
-        likes: 3,
-        avatarColors: ["#FFC0CB", "#FFFACD", "#AFEEEE"],
-      },
-      {
-        id: 12,
-        title: "Canine Influenza",
-        description: "Flu shots recommended for all dogs in city shelters.",
-        comments: 6,
-        likes: 2,
-        avatarColors: ["#F5DEB3", "#87CEFA", "#FF6347"],
-      },
-      {
-        id: 13,
-        title: "Skin Parasites Warning",
-        description: "Flea and tick meds are a must for all pets, say vets.",
-        comments: 15,
-        likes: 12,
-        avatarColors: ["#FFF8DC", "#FFB6C1", "#E6E6FA"],
-      },
-      {
-        id: 14,
-        title: "Heartworm Surge",
-        description: "Mosquito season spikes heartworm cases among canines.",
-        comments: 4,
-        likes: 2,
-        avatarColors: ["#FA8072", "#E0FFFF", "#FAFAD2"],
-      },
-      {
-        id: 15,
-        title: "Cats & Ear Mites",
-        description: "Indoor cats also at risk—check those ears frequently!",
-        comments: 10,
-        likes: 8,
-        avatarColors: ["#FFDAB9", "#D8BFD8", "#CD853F"],
-      },
+      }
     ];
   
     return (
@@ -194,189 +123,383 @@ export const DashboardPage = () => {
 
 export const MypetPage = () => {
     const [newPetDetails, setNewPetDetails] = useState({
-        animal_name: "",
-        age: "",
-        species: "",
-        breed: ""
+      animal_name: "",
+      age: "",
+      species: "",
+      breed: "",
     });
-
-    const [userId, setUserId] = useState("")
-
-    // state to store retrieved pets
-    const [pets, setPets] = useState([]) //store fetched pets
-
-    // function to get the users  id from the local storage on mount
-
-    useEffect(() => {
-        const storedData = localStorage.getItem("loginDetails");
-
-        if (storedData) {
-            const parsedData = JSON.parse(storedData); // Parse the JSON string
-            if (parsedData.id) {
-                setUserId(parsedData.id); // Set the username from the object
-            }
-        }
-    }, [])
-
+    const [userId, setUserId] = useState("");
+    const [pets, setPets] = useState([]); 
     const [isLoading, setIsLoading] = useState(false);
-
-    const handleInputChange = (event) => {
-        event.preventDefault();
-        const { name, value } = event.target;
-        setNewPetDetails({ ...newPetDetails, [name]: value });
-    };
-
-    const handleFormValidation = () => {
-        if (
-            newPetDetails.animal_name.trim() === "" ||
-            newPetDetails.age.trim() === "" ||
-            newPetDetails.species.trim() === "" ||
-            newPetDetails.breed.trim() === ""
-        ) {
-            toast.error("Please fill all the fields", {
-                style: {
-                    background: "rgb(240, 139, 156)",
-                },
-            });
-            return false;
-        }
-        return true;
-    };
-
+  
     useEffect(() => {
-        if (userId) {
-            fetchUserPets();
+      const storedData = localStorage.getItem("loginDetails");
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        if (parsedData.id) {
+          setUserId(parsedData.id);
         }
+      }
+    }, []);
+  
+    useEffect(() => {
+      if (userId) {
+        fetchUserPets();
+      }
     }, [userId]);
-
-    const uploadPetSubmission = async (event) => {
-        event.preventDefault();
-
-        if (!handleFormValidation()) {
-            setIsLoading(false); // Ensure loader stops if validation fails
-            return;
-        }
-
-        try {
-            const payload = { ...newPetDetails, user_id: Number(userId) };
-            setIsLoading(true);
-            const response = await fetch('https://vet-vista.onrender.com/mypets/addpet', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload),
-            });
-
-            if (response.ok) {
-                toast.success("Pet added successfully", {
-                    style: {
-                        background: "rgb(144, 234, 96)",
-                    },
-                });
-                setNewPetDetails({
-                    animal_name: "",
-                    age: "",
-                    species: "",
-                    breed: ""
-                });
-                fetchUserPets();
-            } else {
-                toast.error("Failed to add pet. Please try again.", {
-                    style: {
-                        background: "rgb(240, 139, 156)",
-                    },
-                });
-            }
-        } catch (err) {
-            toast.error("Oops! Something went wrong", {
-                style: {
-                    background: "rgb(240, 139, 156)",
-                },
-            });
-            console.error(err);
-        } finally {
-            setIsLoading(false); // Ensure loader stops in case of error
-        }
-    };
-
-    // function to fetch all the users pets on mount
-
+  
     const fetchUserPets = async () => {
-        try {
-            const response = await fetch(`https://vet-vista.onrender.com/mypets/allpets/${Number(userId)}`);
-            if (response.ok) {
-                const data = await response.json();
-                setPets(data); // Store fetched pets in state
-            } else {
-                toast.error("Failed to fetch pets");
-            }
-        } catch (error) {
-            toast.error("Error fetching pets");
-            console.error(error);
+      try {
+        const response = await fetch(
+          `https://vet-vista.onrender.com/mypets/allpets/${Number(userId)}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setPets(data);
+        } else {
+          toast.error("Failed to fetch pets");
         }
+      } catch (error) {
+        toast.error("Error fetching pets");
+        console.error(error);
+      }
     };
-
-    // function to fetch the users pets on mount
-
-
+  
+    const handleInputChange = (event) => {
+      event.preventDefault();
+      const { name, value } = event.target;
+      setNewPetDetails({ ...newPetDetails, [name]: value });
+    };
+  
+    const handleFormValidation = () => {
+      if (
+        newPetDetails.animal_name.trim() === "" ||
+        newPetDetails.age.trim() === "" ||
+        newPetDetails.species.trim() === "" ||
+        newPetDetails.breed.trim() === ""
+      ) {
+        toast.error("Please fill all the fields");
+        return false;
+      }
+      return true;
+    };
+  
+    const uploadPetSubmission = async (event) => {
+      event.preventDefault();
+  
+      if (!handleFormValidation()) {
+        setIsLoading(false);
+        return;
+      }
+  
+      try {
+        const payload = { ...newPetDetails, user_id: Number(userId) };
+        setIsLoading(true);
+        const response = await fetch(
+          "https://vet-vista.onrender.com/mypets/addpet",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          }
+        );
+  
+        if (response.ok) {
+          toast.success("Pet added successfully");
+          setNewPetDetails({
+            animal_name: "",
+            age: "",
+            species: "",
+            breed: "",
+          });
+          fetchUserPets();
+        } else {
+          toast.error("Failed to add pet. Please try again.");
+        }
+      } catch (err) {
+        toast.error("Oops! Something went wrong");
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
     return (
-        <>
-            <section className={"my-pet-page-section"}>
-                <div className={"my-pet-header"}>
-                    <h3>My Pets</h3>
-                    <br />
-                    <h1>Your personal vet inventory</h1>
-                </div>
-                <br />
-
-                <section className={"add-new-pet-section"}>
-                    <div className={"add-new-pet-form-picture"}>
-                        <svg width="74" height="54" viewBox="0 0 74 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M56.9999 0.333252C51.2999 0.333252 47.8333 1.43325 45.8333 2.36659C43.2666 1.09992 40.3333 0.333252 36.9999 0.333252C33.6666 0.333252 30.7333 1.09992 28.1666 2.36659C26.1666 1.43325 22.6999 0.333252 16.9999 0.333252C6.99992 0.333252 0.333252 26.9999 0.333252 33.6666C0.333252 36.4333 4.73325 38.9666 10.7999 39.9999C12.9333 47.4666 22.9999 53.1666 35.3333 53.6666V39.3999C33.3666 38.1666 30.3333 35.9333 30.3333 33.6666C30.3333 30.3333 36.9999 30.3333 36.9999 30.3333C36.9999 30.3333 43.6666 30.3333 43.6666 33.6666C43.6666 35.9333 40.6333 38.1666 38.6666 39.3999V53.6666C50.9999 53.1666 61.0666 47.4666 63.1999 39.9999C69.2666 38.9666 73.6666 36.4333 73.6666 33.6666C73.6666 26.9999 66.9999 0.333252 56.9999 0.333252ZM10.8333 33.2332C9.16659 32.8333 7.86659 32.3666 6.99992 31.9999C7.83325 22.7666 14.3333 8.33325 17.1666 6.99992C18.9666 6.99992 20.3333 7.19992 21.5666 7.36659C14.5666 15.0666 11.7999 27.1333 10.8333 33.2332ZM26.9999 26.9999C26.1159 26.9999 25.268 26.6487 24.6429 26.0236C24.0178 25.3985 23.6666 24.5506 23.6666 23.6666C23.6666 21.8666 25.1666 20.3333 26.9999 20.3333C27.884 20.3333 28.7318 20.6844 29.3569 21.3096C29.9821 21.9347 30.3333 22.7825 30.3333 23.6666C30.3333 25.5333 28.8333 26.9999 26.9999 26.9999ZM46.9999 26.9999C46.1159 26.9999 45.268 26.6487 44.6429 26.0236C44.0178 25.3985 43.6666 24.5506 43.6666 23.6666C43.6666 21.8666 45.1666 20.3333 46.9999 20.3333C47.884 20.3333 48.7318 20.6844 49.3569 21.3096C49.9821 21.9347 50.3333 22.7825 50.3333 23.6666C50.3333 25.5333 48.8333 26.9999 46.9999 26.9999ZM63.1666 33.2332C62.1999 27.1333 59.4333 15.0666 52.4333 7.36659C53.6666 7.19992 55.0333 6.99992 56.8333 6.99992C59.6666 8.33325 66.1666 22.7666 66.9999 31.9999C66.1666 32.3666 64.8666 32.8333 63.1666 33.2332Z" fill="#0C4651" />
-                        </svg>
-
-                        <br />
-                        <h3>Add Pet</h3>
-                        <p>Include your personal pet</p>
-                    </div>
-
-                    <form onSubmit={uploadPetSubmission} className={"add-new-pet-form"}>
-                        <input type="text" name="animal_name" value={newPetDetails.animal_name} placeholder="Name" onChange={handleInputChange} />
-                        <input type="number" name="age" value={newPetDetails.age} placeholder="Age" onChange={handleInputChange} />
-                        <input type="text" name="species" value={newPetDetails.species} placeholder="Specie" onChange={handleInputChange} />
-                        <input type="text" name="breed" value={newPetDetails.breed} placeholder="Breed" onChange={handleInputChange} />
-
-                        <button type="submit">
-                            {isLoading ? <SmallLoader /> : "Add"}
-                        </button>
-                    </form>
-                </section>
-
-                <br />
-
-                <section className="my-pets-list-container">
-                    <h2>Your Pets</h2>
-                    {pets.length === 0 ? (
-                        <p>No pets added yet.</p>
-                    ) : (
-                        <ul className="pet-card-list">
-                            {pets.map((pet) => (
-                                <li key={pet._id} className="pet-card">
-                                    <h3 className="pet-name">{pet.animal_name}</h3>
-                                    <p className="pet-age">Age: {pet.age}</p>
-                                    <p className="pet-species">Species: {pet.species}</p>
-                                    <p className="pet-breed">Breed: {pet.breed}</p>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                </section>
-                <Toaster position="top-center" reverseOrder={false} />
-            </section>
-        </>
+      <>
+        <section className="my-pet-page-section">
+          <div className="my-pet-header">
+            <h3>My Pets</h3>
+            <br />
+            <h1>Your personal vet inventory</h1>
+          </div>
+          <br />
+  
+          <section className="add-new-pet-section">
+            <div className="add-new-pet-form-picture">
+              {/* Some decorative SVG or image */}
+              <svg
+                width="74"
+                height="54"
+                viewBox="0 0 74 54"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                {/* your path here */}
+              </svg>
+  
+              <br />
+              <h3>Add Pet</h3>
+              <p>Include your personal pet</p>
+            </div>
+  
+            <form onSubmit={uploadPetSubmission} className="add-new-pet-form">
+              <input
+                type="text"
+                name="animal_name"
+                value={newPetDetails.animal_name}
+                placeholder="Name"
+                onChange={handleInputChange}
+              />
+              <input
+                type="number"
+                name="age"
+                value={newPetDetails.age}
+                placeholder="Age"
+                onChange={handleInputChange}
+              />
+  
+              {/* Species Dropdown */}
+              <select
+                className="animal-dropdown-select-my-pet-page"
+                name="species"
+                value={newPetDetails.species}
+                onChange={(e) => {
+                  const species = e.target.value;
+                  setNewPetDetails({
+                    ...newPetDetails,
+                    species,
+                    breed: "", // reset breed on species change
+                  });
+                }}
+              >
+                <option value="" disabled>
+                  Select Animal
+                </option>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+                <option value="cow">Cow</option>
+                <option value="rabbit">Rabbit</option>
+                <option value="horse">Horse</option>
+                <option value="goat">Goat</option>
+                <option value="sheep">Sheep</option>
+                <option value="pig">Pig</option>
+              </select>
+  
+              {/* Breed Dropdown */}
+              <select
+                className="animal-dropdown-select-my-pet-page"
+                name="breed"
+                value={newPetDetails.breed}
+                onChange={(e) =>
+                  setNewPetDetails({
+                    ...newPetDetails,
+                    breed: e.target.value,
+                  })
+                }
+              >
+                <option value="" disabled>
+                  Select Breed
+                </option>
+                {newPetDetails.species === "dog" && (
+                  <>
+                    <option value="Labrador">Labrador</option>
+                    <option value="Beagle">Beagle</option>
+                    <option value="German shepherd">German shepherd</option>
+                    <option value="Bulldog">Bulldog</option>
+                    <option value="Poodle">Poodle</option>
+                    <option value="Chihuahua">Chihuahua</option>
+                    <option value="Siberian Husky">Siberian Husky</option>
+                    <option value="Golden Retriever">Golden Retriever</option>
+                    <option value="Dachshund">Dachshund</option>
+                    <option value="Husky">Husky</option>
+                    <option value="Border collie">Border collie</option>
+                    <option value="Labrador retriever">Labrador retriever</option>
+                    <option value="Rottweiler">Rottweiler</option>
+                    <option value="Shih Tzu">Shih Tzu</option>
+                    <option value="Dalmatian">Dalmatian</option>
+                    <option value="Akita">Akita</option>
+                    <option value="Boxer">Boxer</option>
+                    <option value="Corgi">Corgi</option>
+                    <option value="Doberman pinscher">Doberman pinscher</option>
+                    <option value="Pit Bull">Pit Bull</option>
+                    <option value="Cocker spaniel">Cocker spaniel</option>
+                    <option value="Yorkshire Terrier">Yorkshire Terrier</option>
+                  </>
+                )}
+                {newPetDetails.species === "cat" && (
+                  <>
+                    <option value="Scottish Fold">Scottish Fold</option>
+                    <option value="Russian Blue">Russian Blue</option>
+                    <option value="Ragdoll">Ragdoll</option>
+                    <option value="Sphynx">Sphynx</option>
+                    <option value="Abyssinian">Abyssinian</option>
+                    <option value="Siberian">Siberian</option>
+                    <option value="Siamese">Siamese</option>
+                    <option value="Bombay">Bombay</option>
+                    <option value="Persian">Persian</option>
+                    <option value="Burmese">Burmese</option>
+                    <option value="Devon Rex">Devon Rex</option>
+                    <option value="Manx">Manx</option>
+                    <option value="Maine Coon">Maine Coon</option>
+                    <option value="American Curl">American Curl</option>
+                    <option value="Bengal">Bengal</option>
+                    <option value="British Shorthair">British Shorthair</option>
+                  </>
+                )}
+                {newPetDetails.species === "cow" && (
+                  <>
+                    <option value="Red Angus">Red Angus</option>
+                    <option value="Ayrshire">Ayrshire</option>
+                    <option value="Hereford">Hereford</option>
+                    <option value="Red Poll">Red Poll</option>
+                    <option value="Guernsey">Guernsey</option>
+                    <option value="Dexter">Dexter</option>
+                    <option value="Brown Swiss">Brown Swiss</option>
+                    <option value="Limousin">Limousin</option>
+                    <option value="Charolais">Charolais</option>
+                    <option value="Holstein">Holstein</option>
+                    <option value="Shorthorn">Shorthorn</option>
+                    <option value="Aberdeen Angus">Aberdeen Angus</option>
+                    <option value="Brahman">Brahman</option>
+                    <option value="Angus">Angus</option>
+                    <option value="Jersey">Jersey</option>
+                    <option value="Belted Galloway">Belted Galloway</option>
+                    <option value="Simmental">Simmental</option>
+                  </>
+                )}
+                {newPetDetails.species === "rabbit" && (
+                  <>
+                    <option value="English Lop">English Lop</option>
+                    <option value="Flemish Giant">Flemish Giant</option>
+                    <option value="Mini Rex">Mini Rex</option>
+                    <option value="Mini Lop">Mini Lop</option>
+                    <option value="Holland Lop">Holland Lop</option>
+                    <option value="English Spot">English Spot</option>
+                    <option value="Dutch">Dutch</option>
+                    <option value="Himalayan">Himalayan</option>
+                    <option value="English Angora">English Angora</option>
+                  </>
+                )}
+                {newPetDetails.species === "horse" && (
+                  <>
+                    <option value="Thoroughbred">Thoroughbred</option>
+                    <option value="Mustang">Mustang</option>
+                    <option value="Appaloosa">Appaloosa</option>
+                    <option value="Arabian">Arabian</option>
+                    <option value="American Quarter">American Quarter</option>
+                    <option value="Morgan">Morgan</option>
+                    <option value="Percheron">Percheron</option>
+                    <option value="Shire">Shire</option>
+                    <option value="Welsh Pony">Welsh Pony</option>
+                    <option value="Tennessee Walker">Tennessee Walker</option>
+                    <option value="Belgian">Belgian</option>
+                    <option value="Paint">Paint</option>
+                    <option value="Shetland Pony">Shetland Pony</option>
+                    <option value="Tennessee Walking Horse">Tennessee Walking Horse</option>
+                    <option value="Andalusian">Andalusian</option>
+                    <option value="Pinto">Pinto</option>
+                    <option value="Quarter Horse">Quarter Horse</option>
+                    <option value="Standardbred">Standardbred</option>
+                    <option value="Clydesdale">Clydesdale</option>
+                  </>
+                )}
+                {newPetDetails.species === "goat" && (
+                  <>
+                    <option value="Nigerian Dwarf">Nigerian Dwarf</option>
+                    <option value="Kiko">Kiko</option>
+                    <option value="Saanen">Saanen</option>
+                    <option value="Angora">Angora</option>
+                    <option value="Toggenburg">Toggenburg</option>
+                    <option value="Alpine">Alpine</option>
+                    <option value="Boer">Boer</option>
+                    <option value="Nubian">Nubian</option>
+                    <option value="LaMancha">LaMancha</option>
+                  </>
+                )}
+                {newPetDetails.species === "sheep" && (
+                  <>
+                    <option value="Blackface">Blackface</option>
+                    <option value="Romney">Romney</option>
+                    <option value="Karakul">Karakul</option>
+                    <option value="Suffolk">Suffolk</option>
+                    <option value="Cheviot">Cheviot</option>
+                    <option value="Leicester Longwool">Leicester Longwool</option>
+                    <option value="Tunis">Tunis</option>
+                    <option value="Merino">Merino</option>
+                    <option value="Southdown">Southdown</option>
+                    <option value="Hampshire">Hampshire</option>
+                    <option value="Lincoln">Lincoln</option>
+                    <option value="Finnsheep">Finnsheep</option>
+                    <option value="Dorset">Dorset</option>
+                    <option value="Texel">Texel</option>
+                    <option value="Corriedale">Corriedale</option>
+                    <option value="Dorper">Dorper</option>
+                    <option value="Rambouillet">Rambouillet</option>
+                    <option value="Border Leicester">Border Leicester</option>
+                  </>
+                )}
+                {newPetDetails.species === "pig" && (
+                  <>
+                    <option value="Hampshire">Hampshire</option>
+                    <option value="Wessex Saddleback">Wessex Saddleback</option>
+                    <option value="Yorkshire">Yorkshire</option>
+                    <option value="Berkshire">Berkshire</option>
+                    <option value="Poland China">Poland China</option>
+                    <option value="Pietrain">Pietrain</option>
+                    <option value="Duroc">Duroc</option>
+                    <option value="Landrace">Landrace</option>
+                    <option value="Large White">Large White</option>
+                    <option value="Chester White">Chester White</option>
+                    <option value="Tamworth">Tamworth</option>
+                  </>
+                )}
+              </select>
+  
+              <button type="submit">
+                {isLoading ? <SmallLoader /> : "Add"}
+              </button>
+            </form>
+          </section>
+  
+          <br />
+  
+          <section className="my-pets-list-container">
+            <h2>Your Pets</h2>
+            {pets.length === 0 ? (
+              <p>No pets added yet.</p>
+            ) : (
+              <ul className="pet-card-list">
+                {pets.map((pet) => (
+                  <li key={pet._id} className="pet-card">
+                    {/* Pet Icon */}
+                    <div className="pet-icon">{getPetIcon(pet.species)}</div>
+  
+                    {/* Pet Info */}
+                    <h3 className="pet-name">{pet.animal_name}</h3>
+                    <p className="pet-age">Age: {pet.age}</p>
+                    <p className="pet-species">Species: {pet.species}</p>
+                    <p className="pet-breed">Breed: {pet.breed}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+          <Toaster position="top-center" reverseOrder={false} />
+        </section>
+      </>
     );
-};
+  };
+    
 
 
 // =====================================================================

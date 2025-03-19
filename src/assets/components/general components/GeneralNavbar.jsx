@@ -4,7 +4,7 @@ const GeneralNavbar = () => {
   return (
     <>
         <nav className={"general-Navbar"}>
-            <h2>PetVista</h2>
+            <h2>VetVista</h2>
         </nav>
     </>
   )

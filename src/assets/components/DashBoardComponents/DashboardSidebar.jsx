@@ -1,7 +1,37 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../general components/ContextApi'
+import { useNavigate } from "react-router-dom";
 
 const DashboardSidebar = () => {
+
+    const [userDetails, setUserDetails] = useState({
+        name: "",
+        email: ""
+    })
+    const navigate = useNavigate();
+
+    
+
+    useEffect(() => {
+        const userData = JSON.parse(localStorage.getItem('loginDetails'));
+        if (userData) {
+            setUserDetails({
+                email: userData.email,
+                name: userData.name
+            })
+        } else {
+            setUserDetails({
+                email: "",
+                name: ""
+            })
+        }
+    }, [])
+
+    const logOut = () => {
+        localStorage.removeItem('loginDetails');
+        navigate("/")
+    }
+
     const {
         dashBoardClick,
         setDashBoardClick,
@@ -128,6 +158,26 @@ const DashboardSidebar = () => {
                         <div style={greenLineStyle(nearbyVetButtonClick)}></div>
                     </li>
                 </ul>
+            </div>
+            <br />
+            <div className="sidebar-footer">
+                <div className={"sideBar-user-Details"}>
+                    <div className='user-Initial'>{userDetails.name.charAt(0).toUpperCase()}</div>
+
+                    <div className={"userEmail"}> <p>{userDetails.email}</p> </div>
+
+
+                </div>
+                <br />
+                    <div onClick={logOut} className={"logOut"} >
+                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-2"></path>
+                            <path d="M21 12H7"></path>
+                            <path d="m18 15 3-3-3-3"></path>
+                        </svg>
+
+                        Log Out
+                    </div>
             </div>
         </aside>
     )

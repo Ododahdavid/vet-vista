@@ -16,7 +16,7 @@ const Header = () => {
                         <h1>Monitor your pets health and well-being!</h1>
                         <br />
                         <p>
-                            Lorem ipsum dolor sit amet consectetur. Et egestas et sed tortor arcu nibh. Morbi feugiat scelerisque ipsum fringilla tortor consectetur.
+                        Vet Vista is your personal pet management system. Easily add and track your pets’ details—including name, age, species, and breed—in one convenient dashboard. Designed for pet owners and veterinary practices alike, Vet Vista simplifies the way you manage your pet inventory, ensuring you always have the most up-to-date information at your fingertips.
                         </p>
                         <br />
                         <button className={"header-getStarted-button"}>
