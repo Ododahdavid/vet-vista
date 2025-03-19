@@ -8,35 +8,187 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 
 export const DashboardPage = () => {
-
-    const [username, setUsername] = useState("")
-
+    const [username, setUsername] = useState("");
+  
     useEffect(() => {
-        const storedData = localStorage.getItem("loginDetails");
-
-        if (storedData) {
-            const parsedData = JSON.parse(storedData); // Parse the JSON string
-            if (parsedData.name) {
-                setUsername(parsedData.name); // Set the username from the object
-            }
+      const storedData = localStorage.getItem("loginDetails");
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        if (parsedData.name) {
+          setUsername(parsedData.name);
         }
-    }, [])
-
+      }
+    }, []);
+  
+    // 15 static news items
+    const newsData = [
+      {
+        id: 1,
+        title: "Rabies @ Nation Town",
+        description: "Hide your dogs, keep your cats, and release all hounds on earth.",
+        comments: 12,
+        likes: 5,
+        avatarColors: ["#FFB6C1", "#FFD700", "#ADD8E6"],
+      },
+      {
+        id: 2,
+        title: "Avian Flu Cases",
+        description: "Local farms on alert as bird flu spreads rapidly.",
+        comments: 8,
+        likes: 10,
+        avatarColors: ["#98FB98", "#FFA07A"],
+      },
+      {
+        id: 3,
+        title: "Foot-and-Mouth Outbreak",
+        description: "Livestock quarantined in eastern regions to contain disease.",
+        comments: 14,
+        likes: 7,
+        avatarColors: ["#FFC0CB", "#B0E0E6", "#FFFFE0"],
+      },
+      {
+        id: 4,
+        title: "Parvovirus in Puppies",
+        description: "Veterinarians urge timely vaccinations for new pups.",
+        comments: 5,
+        likes: 2,
+        avatarColors: ["#F0E68C", "#FA8072", "#E6E6FA"],
+      },
+      {
+        id: 5,
+        title: "Tick Fever on the Rise",
+        description: "Tick-borne diseases spike as summer heat intensifies.",
+        comments: 9,
+        likes: 4,
+        avatarColors: ["#FFDAB9", "#B0C4DE", "#FF7F50"],
+      },
+      {
+        id: 6,
+        title: "Distemper Outbreak",
+        description: "Local shelters offering free distemper vaccines.",
+        comments: 11,
+        likes: 6,
+        avatarColors: ["#FF69B4", "#8FBC8F", "#CD5C5C"],
+      },
+      {
+        id: 7,
+        title: "Leptospirosis Warning",
+        description: "Standing water hazards prompt new caution advisories.",
+        comments: 3,
+        likes: 9,
+        avatarColors: ["#87CEFA", "#FFB6C1", "#FFFACD"],
+      },
+      {
+        id: 8,
+        title: "Salmonella in Pets",
+        description: "Check your pet food brand for latest recall notices.",
+        comments: 13,
+        likes: 8,
+        avatarColors: ["#FFA07A", "#B0E0E6", "#FFF8DC"],
+      },
+      {
+        id: 9,
+        title: "Ringworm in Cats",
+        description: "Feline owners advised on hygiene and early detection.",
+        comments: 2,
+        likes: 1,
+        avatarColors: ["#D8BFD8", "#FFD700", "#FF4500"],
+      },
+      {
+        id: 10,
+        title: "Kennel Cough Epidemic",
+        description: "Boarding facilities enforcing stricter vaccine rules.",
+        comments: 10,
+        likes: 5,
+        avatarColors: ["#98FB98", "#FF7F50", "#B0C4DE"],
+      },
+      {
+        id: 11,
+        title: "Equine Flu Spread",
+        description: "Horses in stables require immediate medical checks.",
+        comments: 7,
+        likes: 3,
+        avatarColors: ["#FFC0CB", "#FFFACD", "#AFEEEE"],
+      },
+      {
+        id: 12,
+        title: "Canine Influenza",
+        description: "Flu shots recommended for all dogs in city shelters.",
+        comments: 6,
+        likes: 2,
+        avatarColors: ["#F5DEB3", "#87CEFA", "#FF6347"],
+      },
+      {
+        id: 13,
+        title: "Skin Parasites Warning",
+        description: "Flea and tick meds are a must for all pets, say vets.",
+        comments: 15,
+        likes: 12,
+        avatarColors: ["#FFF8DC", "#FFB6C1", "#E6E6FA"],
+      },
+      {
+        id: 14,
+        title: "Heartworm Surge",
+        description: "Mosquito season spikes heartworm cases among canines.",
+        comments: 4,
+        likes: 2,
+        avatarColors: ["#FA8072", "#E0FFFF", "#FAFAD2"],
+      },
+      {
+        id: 15,
+        title: "Cats & Ear Mites",
+        description: "Indoor cats also at risk—check those ears frequently!",
+        comments: 10,
+        likes: 8,
+        avatarColors: ["#FFDAB9", "#D8BFD8", "#CD853F"],
+      },
+    ];
+  
     return (
-        <>
-            <section className={"dashboard-page-section"}>
-                <div className={"dashboard-page-header"}>
+      <>
+        <section className="dashboard-page-section">
+          <div className="dashboard-page-header">
+            <h3>Dashboard</h3>
+            <br />
+            <h1>Welcome, {username}</h1>
+          </div>
 
-                    <h3>Dashboard</h3>
-                    <br />
-                    <h1>Welcome,  {username}</h1>
-
+          <section className="news-section">
+          <h2>News</h2>
+          <div className="news-cards-container">
+            {newsData.map((item) => (
+              <div className="news-card" key={item.id}>
+                <div className="news-badge">New</div>
+                <h3>{item.title}</h3>
+                <p className="news-description">{item.description}</p>
+  
+                <div className="news-footer">
+                  <div className="avatar-group">
+                    {item.avatarColors.map((color, index) => (
+                      <div
+                        className="avatar-circle"
+                        style={{ backgroundColor: color }}
+                        key={index}
+                      ></div>
+                    ))}
+                  </div>
+  
+                  <div className="news-meta">
+                    <span>{item.comments} comments</span>
+                    <span>{item.likes} Likes</span>
+                  </div>
                 </div>
-            </section>
-        </>
-    )
-}
-
+              </div>
+            ))}
+          </div>
+        </section>
+        </section>
+  
+        {/* News Section */}
+       
+      </>
+    );
+  };
 // =====================================================================
 
 export const MypetPage = () => {
