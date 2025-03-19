@@ -5,8 +5,10 @@ import "./assets/CSS/Home.css"
 import "./assets/CSS/SignUp.css"
 import "./assets/CSS/DashBoard.css"
 import "./assets/CSS/loaders.css"
+import "./assets/CSS/bigLoader.css"
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AppcontextProvider } from "./assets/components/general components/ContextApi.jsx";
+import BigLoader from "./assets/components/loaders/BigLoader.jsx"
 
 
 // import SignUp from "./assets/pages/SignUp.jsx";
@@ -22,7 +24,7 @@ function App() {
     <>
       <AppcontextProvider>
         <Router>
-          <Suspense fallback={<div>Loading..</div>}>
+          <Suspense fallback={<BigLoader/>}>
             <Routes>
               <Route exact path="/login" element={<LoginPage />} />
               <Route exact path="/signup" element={<SignUp />} />

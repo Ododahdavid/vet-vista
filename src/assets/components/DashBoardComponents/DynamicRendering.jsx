@@ -3,6 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 import SmallLoader from '../loaders/SmallLoader.jsx';
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import BigLoader from '../loaders/BigLoader.jsx';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
@@ -1272,7 +1273,7 @@ export const NearbyVetsPage = () => {
             <br />
 
       {locationError && <p className="error-message">{locationError}</p>}
-      {loading && <p>Loading location data...</p>}
+      {loading && <BigLoader/>}
 
       {!loading && !locationError && (
         <>
