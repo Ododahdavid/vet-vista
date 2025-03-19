@@ -747,3 +747,144 @@ h2 {
     font-size: 14px;
     color: #666;
 }
+
+/* DiagnosisResults.css */
+
+/* Overall container for the results page */
+.diagnosis-results-page {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #f9fcfc; /* Soft, light background to match your theme */
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    font-family: "Poppins", sans-serif;
+    color: #333;
+  }
+  
+  .diagnosis-results-page h2 {
+    color: #0C4651; /* Deep teal from your brand colors */
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Pet Details Summary Card */
+  .pet-details-summary {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .pet-details-summary h3 {
+    color: #0C4651;
+    margin-bottom: 1rem;
+  }
+  
+  .pet-details-summary p,
+  .pet-details-summary ul {
+    margin: 0.5rem 0;
+    line-height: 1.5;
+  }
+  
+  /* Container for disease list & chart */
+  .results-content {
+    display: flex;
+    flex-wrap: wrap; /* Wrap on smaller screens */
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  /* Disease List Card */
+  .results-list {
+    flex: 1 1 300px; /* Allows it to shrink/grow */
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .results-list h3 {
+    color: #0C4651;
+    margin-bottom: 1rem;
+  }
+  
+  .results-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .results-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  /* Disease name & percentage styling */
+  .disease-name {
+    font-weight: bold;
+    color: #0C4651;
+  }
+  
+  .disease-percentage {
+    margin-left: 1rem;
+    color: #666;
+  }
+  
+  /* Info icon for disease description (question mark) */
+  .info-icon {
+    margin-left: 0.5rem;
+    color: #1DAA8F; /* Teal accent color */
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.2s;
+  }
+  
+  .info-icon:hover {
+    color: #0C4651; /* Darken on hover */
+  }
+  
+  /* Doughnut Chart Container */
+  .chart-container {
+    flex: 1 1 300px;
+    min-width: 300px;
+    height: 300px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  
+  /* Ensure the Doughnut chart scales properly */
+  .chart-container canvas {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
+  /* Button to view possible solutions */
+  .view-solutions-button {
+    background-color: #0C4651;
+    color: #fff;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .view-solutions-button:hover {
+    background-color: #fff;
+    color: #0C4651;
+    border: 2px solid #0C4651;
+    transition: 0.25s;
+  }
+  
