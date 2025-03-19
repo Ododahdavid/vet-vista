@@ -3,7 +3,7 @@ import React from 'react'
 const BigLoader = () => {
   return (
     <section className={"bigLoaderContainer"}>
-        <div class="Big-loader"></div>
+        <div className="Big-Loader"></div>
     </section>
   )
 }

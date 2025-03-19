@@ -781,6 +781,7 @@
   .nearby-vets-container {
     padding: 2rem;
     font-family: "Poppins", sans-serif;
+    overflow-y: scroll;
 }
 
 h2 {
