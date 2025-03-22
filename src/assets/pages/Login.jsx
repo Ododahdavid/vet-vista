@@ -58,7 +58,7 @@ const Login = () => {
 
                 if (response.ok) {
                     localStorage.removeItem("token")
-                    localStorage.removeItem("userDetails")
+                    localStorage.removeItem("loginDetails")
                     setIsLoading(false)
           
                     // TutorSignUpFormButton.current.disabled = false;
