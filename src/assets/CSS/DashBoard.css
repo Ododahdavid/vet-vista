@@ -690,6 +690,7 @@
     height: 300px;
     margin: 0 auto;
     position: relative;
+    overflow: hidden;
   }
   
   /* Ensures the doughnut chart does not exceed the container size */
@@ -756,6 +757,8 @@
     max-width: 500px;
     width: 90%;
     text-align: left;
+    max-height: 90vh;
+    overflow-y: auto;
   }
   
   /* Button to View Possible Solutions */
@@ -1092,3 +1095,666 @@ h2 {
     padding: 0px 10px;
     background-color: rgb(253, 179, 179) ;
   }
+
+/* ================ RESPONSIVE STYLES ================ */
+
+/* Base responsive adjustments */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Large devices (desktops) - default styles already applied */
+
+/* Medium devices (tablets, less than 1200px) */
+@media (max-width: 1199.98px) {
+  .DashBoard-sideBar {
+    width: 22%;
+  }
+  
+  .dashboard-dynamic-section {
+    width: 78%;
+  }
+  
+  .dashboard-page-header h1 {
+    font-size: 45px;
+  }
+  
+  .news-card {
+    width: 280px;
+  }
+  
+  .pet-card {
+    width: 180px;
+  }
+  
+  .chart-container {
+    min-width: 250px;
+  }
+}
+
+/* Small devices (landscape tablets, less than 992px) */
+@media (max-width: 991.98px) {
+  .DashBoard-sideBar {
+    width: 25%;
+  }
+  
+  .dashboard-dynamic-section {
+    width: 75%;
+  }
+  
+  .dashboard-page-header h1 {
+    font-size: 36px;
+  }
+  
+  .news-cards-container {
+    justify-content: center;
+  }
+  
+  .news-card {
+    width: 260px;
+  }
+  
+  .pet-card-list {
+    justify-content: center;
+  }
+  
+  .add-new-pet-section {
+    flex-direction: column;
+    height: auto;
+    padding: 20px 0;
+  }
+  
+  .add-new-pet-form-picture {
+    width: 100%;
+    max-width: 220px;
+  }
+  
+  .add-new-pet-form {
+    width: 100%;
+    max-width: 250px;
+  }
+  
+  .diagnosis-page-howItWorks-container h3, 
+  .diagnosis-page-howItWorks-container li,
+  .diagnosis-page-howItWorks-container button {
+    width: 450px;
+  }
+  
+  .results-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .results-list, .chart-container {
+    flex: none;
+    width: 100%;
+  }
+
+  .petDetailsForm h1, .petSymptomsForm h3 {
+    font-size: 28px;
+  }
+}
+
+/* Extra small devices (phones, less than 768px) */
+@media (max-width: 767.98px) {
+  /* Remove sidebar and adjust content area */
+  .dashboardContainer {
+    flex-direction: column;
+  }
+  
+  .dashboard-dynamic-section {
+    width: 100%;
+    padding: 70px 20px 20px 20px; /* Space for hamburger menu */
+    margin-left: 0;
+  }
+  
+  /* Content containers */
+  .dashboard-page-section, 
+  .my-pet-page-section, 
+  .diagnosis-page-general-section,
+  .nearby-vets-container {
+    padding-top: 0;
+    margin-top: 0;
+  }
+  
+  /* Headers */
+  .dashboard-page-header,
+  .my-pet-header,
+  .diagnosis-page-general-section > h2 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+  
+  /* Modal overlay */
+  .modal-overlay {
+    padding-top: 60px;
+  }
+  
+  /* Diagnosis container */
+  .diagnosis-page-howItWorks-container,
+  .diagnosis-page-form-container {
+    margin-top: 0;
+    padding-top: 10px;
+  }
+  
+  /* Fix padding for hamburger menu */
+  .hamburger-menu {
+    z-index: 1002;
+  }
+  
+  .dashboardContainer {
+    position: relative;
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+  
+  .DashBoard-sideBar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-bottom: 2px solid #F4F7FE;
+    padding-bottom: 10px;
+  }
+  
+  .sideBar-Header {
+    height: auto;
+    padding: 15px 0;
+  }
+  
+  .sideBar-menu {
+    height: auto;
+    padding: 10px 20px;
+  }
+  
+  .sideBar-menu ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .sideBar-menu ul li {
+    width: 45%;
+    height: 40px;
+  }
+  
+  .sidebar-footer {
+    padding: 10px 20px;
+  }
+  
+  .dashboard-page-header h1,
+  .my-pet-header h1 {
+    margin-top: 0;
+  }
+  
+  .news-section {
+    margin-top: 2rem;
+    padding: 1rem;
+  }
+  
+  .news-card {
+    width: 100%;
+  }
+  
+  .diagnosis-page-general-section {
+    padding: 10px;
+  }
+  
+  .diagnosis-page-howItWorks-container h3, 
+  .diagnosis-page-howItWorks-container li,
+  .diagnosis-page-howItWorks-container button {
+    width: 95%;
+    max-width: 450px;
+  }
+  
+  .petDetailsForm input, 
+  .petSymptomsForm input,
+  .petDetailsForm button,
+  .add-symptoms-next-Button {
+    width: 90%;
+    max-width: 300px;
+  }
+  
+  .followUpQuestionCard {
+    width: 90%;
+    padding: 1rem;
+  }
+  
+  .diagnosis-results-page {
+    padding: 1rem;
+  }
+  
+  .map-container {
+    height: 300px;
+  }
+  
+  .vet-table th,
+  .vet-table td {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .diagnosis-main-container {
+    height: auto;
+    min-height: 70vh;
+  }
+
+  .answerButtons {
+    flex-direction: column;
+  }
+
+  .answerButtons button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .add-symptom-button-container {
+    width: 90%;
+    max-width: 300px;
+  }
+
+  .modal-content {
+    padding: 1.5rem;
+    width: 95%;
+  }
+
+  .chart-container {
+    height: 250px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* Very small devices (small phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .sideBar-Header h2 {
+    font-size: 28px;
+  }
+  
+  .sideBar-menu ul li {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  
+  .dashboard-page-header h1,
+  .my-pet-header h1 {
+    font-size: 28px;
+  }
+  
+  .news-section h2 {
+    font-size: 1.5rem;
+  }
+  
+  .pet-card {
+    width: 100%;
+  }
+  
+  .diagnosis-page-general-section h2 {
+    font-size: 24px;
+  }
+  
+  .diagnosis-page-howItWorks-container h1 {
+    font-size: 28px;
+  }
+  
+  .diagnosis-page-howItWorks-container h3, 
+  .diagnosis-page-howItWorks-container li {
+    width: 90%;
+    font-size: 16px;
+  }
+  
+  .diagnosis-page-howItWorks-container button {
+    width: 90%;
+    font-size: 16px;
+  }
+  
+  .petDetailsForm h1, .petSymptomsForm h3 {
+    font-size: 24px;
+  }
+  
+  .followUpQuestionCard h2 {
+    font-size: 1.2rem;
+  }
+
+  .followUpQuestionCard {
+    padding: 0.8rem;
+  }
+
+  .vet-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .search-bar {
+    width: 90%;
+  }
+  
+  .userEmail p {
+    font-size: 13px;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .logOut {
+    font-size: 16px;
+  }
+  
+  .user-Initial {
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+  }
+
+  /* For extremely small screens */
+  @media (max-width: 360px) {
+    .logout-text {
+      display: none;
+    }
+    
+    .logOut {
+      justify-content: center;
+      padding: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+  }
+
+  .modal-content {
+    padding: 1rem;
+    width: 95%;
+  }
+
+  .chart-container {
+    height: 220px;
+  }
+
+  /* Fix header visibility */
+  .dashboard-page-header,
+  .my-pet-header {
+    margin-top: 10px;
+    padding-top: 0;
+  }
+
+  .dashboard-dynamic-section {
+    padding: 60px 15px 15px 15px;
+  }
+}
+
+/* For landscape mode on small devices */
+@media (max-height: 500px) and (orientation: landscape) {
+  .DashBoard-sideBar {
+    height: auto;
+  }
+  
+  .dashboardContainer {
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  .add-new-pet-section {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .follow-up-questions-container,
+  .petDetailsForm,
+  .petSymptomsForm {
+    height: auto;
+    min-height: 70vh;
+    padding: 20px 0;
+  }
+}
+
+/* For very tall screens */
+@media (min-height: 1000px) {
+  .diagnosis-page-howItWorks-container,
+  .diagnosis-main-container,
+  .follow-up-questions-container,
+  .petDetailsForm,
+  .petSymptomsForm {
+    min-height: 70vh;
+  }
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1002;
+  cursor: pointer;
+  background-color: #0C4651;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hamburger-icon {
+  width: 25px;
+  height: 20px;
+  position: relative;
+  transform: rotate(0deg);
+  transition: .5s ease-in-out;
+}
+
+.hamburger-icon span {
+  display: block;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background: white;
+  border-radius: 3px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: .25s ease-in-out;
+}
+
+.hamburger-icon span:nth-child(1) {
+  top: 0px;
+}
+
+.hamburger-icon span:nth-child(2) {
+  top: 8px;
+}
+
+.hamburger-icon span:nth-child(3) {
+  top: 16px;
+}
+
+.hamburger-icon.open span:nth-child(1) {
+  top: 8px;
+  transform: rotate(135deg);
+}
+
+.hamburger-icon.open span:nth-child(2) {
+  opacity: 0;
+  left: -60px;
+}
+
+.hamburger-icon.open span:nth-child(3) {
+  top: 8px;
+  transform: rotate(-135deg);
+}
+
+.close-menu {
+  display: none;
+  cursor: pointer;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
+/* Extra small devices (phones, less than 768px) */
+@media (max-width: 767.98px) {
+  .hamburger-menu {
+    display: flex;
+  }
+  
+  .DashBoard-sideBar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 280px;
+    height: 100vh;
+    z-index: 999;
+    transition: left 0.3s ease-in-out;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    padding-top: 20px;
+    overflow-y: auto;
+  }
+  
+  .DashBoard-sideBar.mobile-open {
+    left: 0;
+  }
+  
+  .sideBar-Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: auto;
+  }
+  
+  .close-menu {
+    display: block;
+  }
+  
+  .sideBar-menu {
+    padding-left: 10px;
+    height: auto;
+  }
+  
+  .sideBar-menu ul {
+    display: block !important;
+  }
+  
+  .sideBar-menu ul li {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .dashboard-dynamic-section {
+    width: 100%;
+    padding-top: 60px; /* Make room for hamburger menu */
+  }
+  
+  .dashboardContainer {
+    flex-direction: row; /* Revert back to row from column */
+    height: 100vh; /* Full height */
+  }
+}
+
+/* Ensure containers are properly scrollable */
+.dashboard-page-section,
+.my-pet-page-section,
+.diagnosis-page-general-section,
+.nearby-vets-container {
+  overflow-y: auto;
+  height: auto;
+}
+
+/* Add z-index to ensure overlay is above content but below sidebar */
+.sidebar-overlay {
+  z-index: 1000;
+}
+
+/* Fix content height and overflow */
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Fix for the dashboard layout overall structure to handle hamburger menu */
+.dashboardContainer {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f5f8fa;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.dashboard-dynamic-section {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
+}
+
+/* Fix diagnosis container height and scroll */
+.diagnosis-main-container {
+  min-height: 70vh;
+  height: auto;
+  overflow-y: auto;
+  margin-top: 20px;
+}
+
+/* Ensure proper z-index layering for mobile */
+.hamburger-menu {
+  z-index: 1002;
+}
+
+.DashBoard-sideBar {
+  z-index: 1001;
+}
+
+.sidebar-overlay {
+  z-index: 1000;
+}
+
+/* Content area spacing and overflow fixes */
+@media (max-width: 767.98px) {
+  /* Fix content positions relative to hamburger menu */
+  .dashboard-dynamic-section {
+    width: 100%;
+    padding: 70px 20px 20px 20px; /* Fixed padding value */
+    margin-left: 0;
+  }
+  
+  /* Fix for nested scroll areas */
+  .dashboard-page-section, 
+  .my-pet-page-section, 
+  .diagnosis-page-general-section,
+  .nearby-vets-container {
+    padding-top: 0;
+    margin-top: 0;
+  }
+  
+  /* Adjust headers to be visible */
+  .dashboard-page-header h1,
+  .my-pet-header h1 {
+    margin-top: 0;
+  }
+  
+  /* Fix diagnosis container on mobile */
+  .diagnosis-page-howItWorks-container,
+  .diagnosis-page-form-container {
+    margin-top: 0;
+    padding-top: 10px;
+  }
+}
+
+/* Ensure header elements don't overflow */
+.dashboard-page-header h1,
+.my-pet-header h1 {
+  word-break: break-word;
+}
