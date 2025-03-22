@@ -15,8 +15,9 @@ body{
 }
 .homePage{
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #fff;
+    overflow-x: hidden;
 }
 .homeNavBar{
     width: 100%;
@@ -24,8 +25,9 @@ body{
     background-color: white;
     display: flex;
     padding: 10px 80px;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 .LogoContainer{
     display: flex;
@@ -60,9 +62,9 @@ body{
 
 .navCotentContainer{
     display: flex;
-    /* gap: 320px; */
     width: 85%;
-    justify-content: space-between;
+    justify-content: flex-end;
+    align-items: center;
 }
 .Nav-Sign-In{
     background-color: #124C5F;
@@ -311,4 +313,522 @@ body{
     width: 100%;
     height: 60vh;
     background-color: #F6FAF9;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .headerInformationContainer h1 {
+        font-size: 40px;
+    }
+    .headerInformationContainer p {
+        font-size: 18px;
+    }
+    .about-us-left h2 {
+        font-size: 50px;
+    }
+    .learnMore-rightSection h2,
+    .learnMore-rightSection p,
+    .about-us-left h2,
+    .about-us-left p {
+        width: 90%;
+    }
+}
+
+@media (max-width: 992px) {
+    .homeNavBar {
+        padding: 10px 20px;
+    }
+    .navCotentContainer {
+        width: 100%;
+    }
+    .Header-section {
+        height: auto;
+        padding: 40px 0;
+    }
+    .headerInformationContainer {
+        width: 90%;
+    }
+    .headerInformationContainer h1 {
+        font-size: 36px;
+    }
+    .services-section {
+        height: auto;
+        padding: 40px 20px;
+    }
+    .Services-list-container {
+        flex-wrap: wrap;
+        padding: 30px 0;
+    }
+    .services-card {
+        width: 140px;
+        height: 140px;
+    }
+    .learnMore-Section,
+    .about-us-section {
+        height: auto;
+        padding: 40px 20px;
+    }
+    .about-us-left h2 {
+        font-size: 40px;
+    }
+    .home-footer {
+        height: auto;
+        padding: 40px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Navbar and hamburger menu styles */
+    .homeNavBar {
+        display: flex !important;
+        justify-content: space-between !important;
+        position: relative !important;
+        padding: 10px 20px !important;
+        z-index: 1600 !important;
+        height: 70px !important;
+    }
+    
+    /* Move the hamburger icon to be directly in the navbar */
+    .hamburger-menu-btn {
+        display: block !important; /* Show hamburger on mobile */
+    }
+    
+    /* Hide any other hamburger icons that might be conflicting */
+    .hamburger-icon {
+        display: none !important;
+    }
+    
+    /* Update mobile menu container to position menu items at the top */
+    .navCotentContainer {
+        position: fixed !important;
+        top: 0 !important;
+        right: -300px !important;
+        width: 250px !important;
+        height: 100vh !important;
+        background-color: white !important;
+        z-index: 1800 !important;
+        transition: right 0.3s ease !important;
+        box-shadow: -3px 0 10px rgba(0, 0, 0, 0.2) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        padding-top: 70px !important; /* Space for logo */
+        justify-content: flex-start !important; /* Align items to the top */
+    }
+    
+    /* Add this back - critical for the menu to appear when active */
+    .navCotentContainer.active {
+        right: 0 !important; /* Slide in when active */
+    }
+    
+    /* Fix menu list to start from the top */
+    .homeNavBar ul {
+        flex-direction: column !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        align-items: flex-start !important; /* Align items to the left */
+    }
+    
+    /* Add a close button at the top */
+    .navCotentContainer::before {
+        content: "×";
+        position: absolute !important;
+        top: 20px !important;
+        right: 20px !important;
+        font-size: 24px !important;
+        color: #124C5F !important;
+        cursor: pointer !important;
+    }
+    
+    /* Space out the menu items properly */
+    .homeNavBar ul li {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 15px 20px !important;
+        border-bottom: 1px solid #f1f1f1 !important;
+        box-sizing: border-box !important;
+        text-align: left !important;
+    }
+    
+    /* Position login/register buttons in the center */
+    .Nav-Sign-In, .Nav-Sign-Register {
+        margin: 8px auto !important;
+        text-align: center !important;
+        width: calc(100% - 40px) !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+    
+    /* Make the li container for buttons also centered */
+    .homeNavBar ul li.Nav-Sign-In, 
+    .homeNavBar ul li.Nav-Sign-Register {
+        text-align: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Ensure RouteLink is centered */
+    .RouteLink {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+    
+    /* Layout changes for mobile */
+    .Header-section {
+        flex-direction: column-reverse;
+    }
+    
+    .Header-left-side,
+    .Header-right-side {
+        width: 100%;
+    }
+    
+    .Header-right-side {
+        background-size: cover;
+        background-position: center top;
+        height: 300px;
+    }
+    
+    .homePage {
+        height: auto;
+    }
+    
+    .Header-left-side {
+        height: auto;
+        padding: 40px 0;
+    }
+    
+    .headerInformationContainer {
+        padding: 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 90%;
+        max-width: 500px;
+    }
+    
+    .headerInformationContainer h1 {
+        font-size: 36px;
+        font-weight: 900;
+    }
+    
+    /* Services section adjustments */
+    .Services-list-container {
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .Services-underline {
+        width: 80px;
+    }
+    
+    /* Learn more section adjustments */
+    .learnMore-Section,
+    .about-us-section {
+        flex-direction: column;
+    }
+    
+    .learnMore-leftSection,
+    .learnMore-rightSection,
+    .about-us-left,
+    .about-us-right {
+        width: 100%;
+    }
+    
+    .learnMore-leftSection {
+        justify-content: center;
+        order: 2;
+        height: 300px;
+    }
+    
+    .learnMore-rightSection {
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        order: 1;
+    }
+    
+    .about-us-left {
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .about-us-right {
+        height: 300px;
+        align-items: center;
+        justify-content: start;
+    }
+    
+    .videoImage {
+        right: auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .LogoContainer {
+        font-size: 20px;
+    }
+    .homeNavBar {
+        padding: 10px;
+    }
+    .homeNavBar ul li {
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+    .headerInformationContainer h1 {
+        font-size: 28px;
+    }
+    .headerInformationContainer p {
+        font-size: 16px;
+    }
+    .Header-blob {
+        opacity: 0.4;
+        transform: scale(0.6);
+        left: -120px;
+    }
+    .Services-list-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .services-card {
+        width: 100%;
+        height: 130px;
+        margin: 0 auto;
+    }
+    .servicesHeader h2 {
+        font-size: 24px;
+        padding-left: 20px;
+    }
+    .Services-underline {
+        left: 20px;
+    }
+    .learnMore-rightSection h2,
+    .about-us-left h2 {
+        font-size: 28px;
+    }
+    .learnMore-rightSection p,
+    .about-us-left p {
+        font-size: 16px;
+    }
+    .DogPicture {
+        width: 95%;
+    }
+    .videoImage {
+        width: 80px;
+        height: 70px;
+    }
+    /* Hide images on small screens as requested */
+    .Header-right-side {
+        display: none;
+    }
+    
+    .about-us-right {
+        display: none;
+    }
+    
+    /* Make header text more prominent since image is gone */
+    .headerInformationContainer h1 {
+        font-size: 32px;
+        font-weight: 900;
+        line-height: 1.2;
+        margin-bottom: 15px;
+    }
+    
+    .headerInformationContainer p {
+        font-size: 18px;
+        margin: 15px 0;
+    }
+    
+    /* Adjust section heights now that images are gone */
+    .Header-section {
+        height: auto;
+        padding: 40px 0;
+    }
+    
+    .Header-left-side {
+        width: 100%;
+        padding: 0;
+    }
+    
+    .about-us-section {
+        padding: 40px 0;
+    }
+    
+    .about-us-left {
+        width: 100%;
+    }
+    
+    .about-us-left h2 {
+        font-size: 36px;
+        margin-bottom: 15px;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .about-us-left p {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .navCotentContainer {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .homeNavBar {
+        height: auto;
+        padding: 15px 10px;
+    }
+    .homeNavBar ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    .homeNavBar ul li {
+        width: 80%;
+        margin-bottom: 5px;
+    }
+    .Header-section {
+        margin-top: 20px;
+    }
+    .Header-right-side {
+        height: 250px;
+    }
+    .services-section {
+        margin-top: 20px;
+    }
+    .headerInformationContainer h1 {
+        font-size: 24px;
+    }
+    
+    /* Ensure entire cards list is visible */
+    .Services-list-container {
+        padding-bottom: 20px;
+    }
+    
+    /* Ensure about us section text is readable */
+    .about-us-left h2 {
+        font-size: 32px;
+        width: 90%;
+    }
+    .headerInformationContainer h1 {
+        font-size: 28px;
+        font-weight: 900;
+    }
+    
+    .header-getStarted-button {
+        width: 80%;
+        margin: 15px auto;
+    }
+    
+    .about-us-left h2 {
+        font-size: 28px;
+        text-align: center;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 360px) {
+    .LogoContainer {
+        font-size: 18px;
+    }
+    .LogoContainer h2 {
+        font-weight: 800;
+    }
+    .logo {
+        width: 24px;
+    }
+    
+    .homeNavBar {
+        padding: 10px 5px;
+    }
+    
+    .headerInformationContainer h1 {
+        font-size: 22px;
+    }
+    
+    .headerInformationContainer p {
+        font-size: 14px;
+    }
+    
+    .header-getStarted-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    
+    .servicesHeader h2 {
+        font-size: 22px;
+    }
+    
+    .services-card {
+        height: 110px;
+        font-size: 13px;
+    }
+    
+    .learnMore-rightSection h2,
+    .about-us-left h2 {
+        font-size: 24px;
+    }
+}
+
+/* Fix page overflow issues on all devices */
+body, html {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+/* Keep only these hamburger menu styles */
+.hamburger-menu-btn {
+  display: none;
+  position: absolute !important;
+  right: 20px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 2000 !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  padding: 10px !important;
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.hamburger-menu-btn span {
+  display: block !important;
+  width: 30px !important;
+  height: 3px !important;
+  margin: 6px 0 !important;
+  background-color: #124C5F !important;
+  border-radius: 3px !important;
+  transition: all 0.3s ease !important;
+}
+
+.hamburger-menu-btn.active span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px) !important;
+}
+
+.hamburger-menu-btn.active span:nth-child(2) {
+  opacity: 0 !important;
+}
+
+.hamburger-menu-btn.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -8px) !important;
+}
+
+.mobile-menu-overlay {
+  display: none;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  z-index: 1500 !important;
+}
+
+.mobile-menu-overlay.active {
+  display: block !important;
 }
