@@ -1289,6 +1289,8 @@ export const DiagnosisPage = () => {
                     </div>
                 </div>
             )}
+                <div className={"disclaimer"}><h3 >Disclaimer: This system provides diagnosis suggestions and may not always be accurate. Consult a Veterinarian for confirmation</h3></div>
+
 
             <Toaster position="top-center" />
         </>

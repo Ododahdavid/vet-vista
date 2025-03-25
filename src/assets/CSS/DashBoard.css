@@ -1758,3 +1758,11 @@ z-index: 1000;
 .my-pet-header h1 {
 word-break: break-word;
 }
+
+.disclaimer{
+  color: #0C4651;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
