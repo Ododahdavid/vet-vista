@@ -1,5 +1,7 @@
 import React from 'react'
 import HeaderDog from "../../../images/upscaleHeaderPhoto.png"
+import { Link as RouteLink } from "react-router-dom"
+
 
 const Header = () => {
     return (
@@ -19,9 +21,9 @@ const Header = () => {
                         Vet Vista is your personal pet management system. Easily add and track your pets’ details—including name, age, species, and breed—in one convenient dashboard. Designed for pet owners and veterinary practices alike, Vet Vista simplifies the way you manage your pet inventory, ensuring you always have the most up-to-date information at your fingertips.
                         </p>
                         <br />
-                        <button className={"header-getStarted-button"}>
+                        <RouteLink className={"header-getStarted-button"} to={"/signup"}>
                                 Get Started
-                        </button>
+                        </RouteLink>
                     </div>
 
                 </div>
